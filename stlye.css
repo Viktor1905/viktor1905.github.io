@@ -1,0 +1,42 @@
+.goods-list{
+    display: grid;
+    grid-gap: 15px 15px;
+    grid-template-columns: repeat(8, 1fr);
+}
+.good-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.good-picture{
+    width: 100px;
+    height: 100px;
+}
+.count-items{
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    grid-gap: 0 5px;
+    text-align: center;
+}
+.count-items span{
+    font-size: 20px;
+}
+.count-btn{
+    padding: 0;
+    border: 0;
+}
+.cart{
+    display: flex;
+    margin-top: 20px;
+}
+.good-item-basket{
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+.total-coast-items-basket{
+    width: 100%;
+    display: block;
+    margin-top: 20px;
+}
