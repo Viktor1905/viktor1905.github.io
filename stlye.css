@@ -40,3 +40,16 @@
     display: block;
     margin-top: 20px;
 }
+.more-btn-place{
+    display: flex;
+    align-items: center;
+}
+.more-btn{
+    background-color: aqua;
+    align-self: center;
+    padding: 0;
+    height: auto;
+    border: 1px solid black;
+    width: 59px;
+
+}

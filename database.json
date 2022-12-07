@@ -1,12 +1,14 @@
 {
     "data": [
-    {"name": "Shirt", "price": 150},
-    {"name": "Socks", "price": 15},
-    {"name": "Jacket", "price": 50},
-    {"name": "Shoes", "price": 1500},
-    {"name": "Shirt-1", "price": 250},
-    {"name": "Socks-1", "price": 25},
-    {"name": "Jacket-1", "price": 90},
-    {"name": "Shoes-1", "price": 1700}
+    {"name": "Shirt", "price": 150, "article" : 1},
+    {"name": "Socks", "price": 15, "article" : 2},
+    {"name": "Jacket", "price": 50, "article" : 3},
+    {"name": "Shoes", "price": 1500, "article" : 4},
+    {"name": "Shirt-1", "price": 250, "article" : 5},
+    {"name": "Socks-1", "price": 25, "article" : 6},
+    {"name": "Jacket-1", "price": 90, "article" : 7},
+    {"name": "Shoes-1", "price": 1700, "article" : 8},
+    {"name": "Jacket-2", "price": 70, "article" : 9},
+    {"name": "Shoes-2", "price": 1000, "article" : 10}
     ]
 }

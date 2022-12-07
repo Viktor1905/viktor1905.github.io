@@ -1,4 +1,3 @@
-
 class CommonList {
     items = []
     fetchGoods (){
@@ -18,21 +17,60 @@ class CommonList {
     }
 
 }
+class moreBtn extends CommonList{
+    constructor(a){
+        super()
+        let goodsPromise = this.fetchGoods()
+        goodsPromise.then(()=>{
+            this.render()
+        })
+    }
+    render (a) {
+        let x = 0;
+        this.items.forEach(good => {
+            let exist = document.getElementById(`item №${good.article}`)
+            if (exist){
+            } else{
+                if(x<2){
+                good.render()
+                console.log(x)
+                x++}
+                } return
+        })
+        
+        console.log(a)
+        
+    }
+}
+
 
 class GoodsList extends CommonList {
 
     constructor () {
         super () 
         let goodsPromise = this.fetchGoods()
+
         goodsPromise.then(()=>{
             this.render()
         })
     } //запрос товаров
+    moreShow (){
+        return new moreBtn(this.items)
+    }
     render () {
-
         this.items.forEach(good => {
+            if(this.items.indexOf(good) < 5){
             good.render()
+            }
         })
+                let placeToRender = document.querySelector('.more-btn-place')
+        if (placeToRender){
+            let moreBtn = document.createElement('button')
+            moreBtn.innerText = 'Показать еще'
+            moreBtn.classList = 'more-btn'
+            moreBtn.onclick = this.moreShow;
+            placeToRender.appendChild(moreBtn)
+        }
     }
 }
 
@@ -41,10 +79,12 @@ class GoodItem{
     price = 0
     number = 1
     totalCoast = 0
+    article 
 
-    constructor({name, price}){
+    constructor({name, price,article}){
         this.name = name
         this.price = price
+        this.article = article
     }
     addBasket = (addBasket => {
         this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText 
@@ -54,7 +94,7 @@ class GoodItem{
 
 
     render() {
-        let placeToRender = document.querySelector('.goods-list')
+        let placeToRender = document.querySelector('.more-btn-place')
 
         if (placeToRender){
             let block = document.createElement('div')
@@ -69,6 +109,7 @@ class GoodItem{
 
 
             goodName.innerHTML = `${this.name}`
+            goodName.setAttribute('id', `item №${this.article}`)
             goodPrice.innerHTML = ` ${this.price}`
             goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
             goodBtn.innerText = 'В корзину' 
@@ -90,7 +131,7 @@ class GoodItem{
             plus.classList = 'count-btn'
 
 
-            placeToRender.appendChild(block)
+            placeToRender.before(block)
             block.appendChild(goodPicture)
             block.appendChild(goodName)
             block.appendChild(goodPrice)
@@ -121,11 +162,8 @@ class Basket extends CommonList {
         let placeToRender = document.querySelector('.cart')
         console.log(placeToRender)
         let check 
-
-
-
         for (let b = 0; b <= basketGoods.length; b++){
-            check = document.getElementById(`item №${a.name}`)
+            check = document.getElementById(`item art:${a.article}`)
 
             if(check){
 
@@ -158,7 +196,8 @@ class Basket extends CommonList {
                 let plus = document.createElement('button')
                 let coast = document.createElement('span')
                 let deleteBtn = document.createElement('button')
-
+        
+                console.log(a.article)
                 goodName.innerHTML = `${a.name}`
                 goodPrice.innerHTML = `Цена: ${a.price}`
                 countItems.innerText = `Количество: `
@@ -173,7 +212,7 @@ class Basket extends CommonList {
 
                 block.classList = 'good-item-basket'
                 goodName.classList = 'good-name-basket'
-                goodName.setAttribute(`id`, `item №${a.name}`)
+                goodName.setAttribute(`id`, `item art:${a.article}`)
                 goodPrice.classList = 'good-price-basket'
                 goodPicture.classList = 'good-picture-basket'
                 countItems.classList = 'count-items-basket'
@@ -320,4 +359,4 @@ function plusCountBasket(){
 
 }
 
-let ListInstance = new GoodsList ();
+new GoodsList ();
