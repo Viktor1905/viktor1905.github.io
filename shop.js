@@ -1,32 +1,32 @@
 
 class CommonList {
     items = []
-    
     fetchGoods (){
-        return [
-            {name: 'Shirt', price: 150},
-            {name: 'Socks', price: 15},
-            {name: 'Jacket', price: 50},
-            {name: 'Shoes', price: 1500},
-            {name: 'Shirt-1', price: 250},
-            {name: 'Socks-1', price: 25},
-            {name: 'Jacket-1', price: 90},
-            {name: 'Shoes-1', price: 1700},
-        ]
+        const result = fetch(`${window.location.href}database.json`) // сделали запрос на сервер и получили промис
+        return result 
+        .then (res =>{ 
+            return res.json()
+        })// сделали перевод данных в объект
+        .then(data =>{ // тут хранится объект из операции выше
+            this.items = data.data.map((cur) => { 
+                return new GoodItem(cur) 
+            })// в items мы поместили массив, который переделали с помощью gooditem в отдельные объекты, data.data - чтоб получить объект data - все наши массивы (нужные для операции), которые хранятся в переменной data, в начале данного then
+        })
+        .catch (err => { // будет срабатывать когда нет сети, или произошла ошибка передачи данных (т.е. пробелмы с соединением)
+            console.warn("Check network", err)
+        }) 
     }
 
 }
 
-class List extends CommonList {
+class GoodsList extends CommonList {
 
     constructor () {
         super () 
-        let goods = this.fetchGoods()
-        goods = goods.map((cur) => { // новый массив нужно создать и присвоить ему результаты
-            return new GoodItem(cur) // мы в конструктор передаем поле 14, в поле 33 сразу раскладываем параметры и делаем объект
-        }, []) // каждый объект трансформировать под GoodItem
-        this.items.push(...goods)// так сделано, чтоб если что то уже лежит - мы добавим еще элементы, а не заменим их. Это спред - выдает как отдельные переменные, а не как один массив (т.е. был бы массив в массиве). 
-        this.render()
+        let goodsPromise = this.fetchGoods()
+        goodsPromise.then(()=>{
+            this.render()
+        })
     } //запрос товаров
     render () {
 
@@ -122,48 +122,7 @@ class Basket extends CommonList {
         console.log(placeToRender)
         let check 
 
-/*        basketGoods.forEach(function(obj){
-            check = document.getElementById(`item №${basketGoods.indexOf(obj)+1}`)
-            console.log(basketGoods.indexOf(obj)+1)
-            if(check){
-                console.log(check.innerText)
-                console.log(a.name)
-                console.log(check.innerText == a.name)
-                    if(check.innerText == a.name){
-                    check.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.innerText = `${a.number}`
-                    check.nextElementSibling.nextElementSibling.nextElementSibling.innerText = `Стоимость: ${a.totalCoast}`
-                    let totalCoastSum = 0;
-                    for (let obj of basketGoods){
-                        totalCoastSum += obj.totalCoast
-                    }
-                    let text = document.querySelector('.total-coast-items-basket')
-                    text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
-                    return
-                    }
-            }
-        })*/
-       /* let b 
-        basketGoods.forEach(function(obj){
-            let p = Object.values(obj);
-            console.log(p[0])
-            check = document.getElementById(`item ${p[0]}`)
-            console.log(check)
-            if(check){
-                            if(check.innerText == a.name){
-                                check.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.innerText = `${a.number}`
-                                check.nextElementSibling.nextElementSibling.nextElementSibling.innerText = `Стоимость: ${a.totalCoast}`
-                                let totalCoastSum = 0;
-                                console.log(check)
-                                for (let obj of basketGoods){
-                                    totalCoastSum += obj.totalCoast
-                                }
-                                let text = document.querySelector('.total-coast-items-basket')
-                                text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
-                                return true
-                            }
-                            
-            } b = false
-    })*/
+
 
         for (let b = 0; b <= basketGoods.length; b++){
             check = document.getElementById(`item №${a.name}`)
@@ -361,4 +320,4 @@ function plusCountBasket(){
 
 }
 
-let ListInstance = new List ();
+let ListInstance = new GoodsList ();
