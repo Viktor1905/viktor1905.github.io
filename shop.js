@@ -86,7 +86,7 @@ class GoodItem{
         this.price = price
         this.article = article
     }
-    addBasket = (addBasket => {
+    addBasket = (() => {
         this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText 
         this.totalCoast = this.price * this.number
        return new Basket(this)
@@ -160,9 +160,7 @@ class Basket extends CommonList {
 
     render(a){
         let placeToRender = document.querySelector('.cart')
-        console.log(placeToRender)
         let check 
-        for (let b = 0; b <= basketGoods.length; b++){
             check = document.getElementById(`item art:${a.article}`)
 
             if(check){
@@ -181,7 +179,7 @@ class Basket extends CommonList {
                 }
                 
             }
-        }
+        
 
     
 
