@@ -1,4 +1,5 @@
 {
+    
     "data": [
     {"name": "Shirt", "price": 150, "article" : 1},
     {"name": "Socks", "price": 15, "article" : 2},

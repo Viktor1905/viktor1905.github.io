@@ -14,7 +14,9 @@ const server = http.createServer((req, res) => { // req - все данные о
         }
     
     } catch (e){
-        console.log(e)
+        let b  = fs.readFileSync('./img/unnamed.jpg') 
+        res.end(b)
+        
 
     }
 

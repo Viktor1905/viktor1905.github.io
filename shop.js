@@ -1,17 +1,22 @@
 class CommonList {
     items = []
-    fetchGoods (){
-        const result = fetch(`${window.location.href}database.json`) // сделали запрос на сервер и получили промис
+    err 
+    fetchGoods (x = `${window.location.href}database.json`){
+        const result = fetch(x) // сделали запрос на сервер и получили промис
+        console.log(this.err)
         return result 
         .then (res =>{ 
+            this.res = res
             return res.json()
         })// сделали перевод данных в объект
-        .then(data =>{ // тут хранится объект из операции выше
+        .then(data =>{
+// тут хранится объект из операции выше
             this.items = data.data.map((cur) => { 
                 return new GoodItem(cur) 
             })// в items мы поместили массив, который переделали с помощью gooditem в отдельные объекты, data.data - чтоб получить объект data - все наши массивы (нужные для операции), которые хранятся в переменной data, в начале данного then
         })
         .catch (err => { // будет срабатывать когда нет сети, или произошла ошибка передачи данных (т.е. пробелмы с соединением)
+            this.err = err
             console.warn("Check network", err)
         }) 
     }
@@ -25,11 +30,29 @@ class moreBtn extends CommonList{
             this.render()
         })
     }
+    qur = 1
     render (a) {
         let x = 0;
+        let b = 0
+        let z = 1 
         this.items.forEach(good => {
+
             let exist = document.getElementById(`item №${good.article}`)
             if (exist){
+                b++
+                if(b == this.items.length){
+                    let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
+
+                    this.qur++
+                    goodsPromise.then(()=>{
+                        if(this.err != undefined){
+                            alert('К сожалению, товары закончились')
+                        }
+                        else{
+                        this.render()}
+                    }) 
+                }
+
             } else{
                 if(x<2){
                 good.render()
@@ -38,7 +61,6 @@ class moreBtn extends CommonList{
                 } return
         })
         
-        console.log(a)
         
     }
 }
@@ -147,9 +169,18 @@ basketGoods = []
 class Basket extends CommonList {
     constructor (a){
         super()
-
+        // return new Promise (()=>{
+        //    basketGoods.find(o => o.name === a.name)
+        // })
+        // .then(()=>{
+        //     basketGoods.push(a)
+        // })
+        // .then(this.render(a))
+        // .catch(()=>
+        //     alert("Товар уже в корзине")
+        // )
         if (basketGoods.find(o => o.name === a.name)){
-
+            
         } else {
             basketGoods.push(a)
             console.log(basketGoods)
@@ -162,14 +193,11 @@ class Basket extends CommonList {
         let placeToRender = document.querySelector('.cart')
         let check 
             check = document.getElementById(`item art:${a.article}`)
-
             if(check){
-
                 if(check.innerText == a.name){
                     check.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.innerText = `${a.number}`
                     check.nextElementSibling.nextElementSibling.nextElementSibling.innerText = `Стоимость: ${a.totalCoast}`
                     let totalCoastSum = 0;
-                    console.log(check)
                     for (let obj of basketGoods){
                         totalCoastSum += obj.totalCoast
                     }
@@ -178,11 +206,7 @@ class Basket extends CommonList {
                     return
                 }
                 
-            }
-        
-
-    
-
+            }  
            if(placeToRender){
                 let block = document.createElement('div')
                 let goodName = document.createElement('span')
