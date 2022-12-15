@@ -22,36 +22,87 @@ class CommonList {
     }
 
 }
-class moreBtn extends CommonList{
-    constructor(a){
-        super()
+
+
+
+class GoodsList extends CommonList {
+    allItems = []
+    constructor () {
+        super () 
         let goodsPromise = this.fetchGoods()
+
         goodsPromise.then(()=>{
+            this.items.forEach(good => {
+                this.allItems.push(good)
+            })
             this.render()
         })
-    }
+    } //запрос товаров
     qur = 1
-    render (a) {
+    moreShow = (() => {
         let x = 0;
         let b = 0
-        let z = 1 
-        this.items.forEach(good => {
-
+        let z = 0
+        this.allItems.forEach(good => {
             let exist = document.getElementById(`item №${good.article}`)
             if (exist){
-                b++
-                if(b == this.items.length){
+                b++            
+                console.log(this.items.length)
+                console.log(b)
+                console.log(this.qur)
+                if(this.items.length - b == 3 && b != 3){
                     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
-
                     this.qur++
                     goodsPromise.then(()=>{
-                        if(this.err != undefined){
-                            alert('К сожалению, товары закончились')
-                        }
-                        else{
-                        this.render()}
-                    }) 
+                        this.items.forEach(good => {
+                            this.allItems.push(good)
+                        })})
+
+                } else if(this.items.length - b == 2 && b != 2){
+                    let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
+                    this.qur++
+                    goodsPromise.then(()=>{
+                        this.items.forEach(good => {
+                            this.allItems.push(good)
+                        })})
+
                 }
+
+                // if(this.items.length - b == 1 && b != 1){
+                //     console.log("x")
+                //     console.log(this.items)
+                //     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
+                //     this.qur++
+                //     goodsPromise.then(()=>{
+                //         if(this.err != undefined){
+                //             alert('К сожалению, товары закончились')
+                //         }
+                //         else{
+                //             let z = 1
+
+                //             if(this.items.length - b == 0 && b != 0){
+                //                 z =2 
+                //             }
+
+
+                //             this.render(z)}
+                //     }) 
+                // }
+
+                // if(b == this.items.length){
+                //     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
+
+
+                //     this.qur++
+                //     goodsPromise.then(()=>{
+                //         if(this.err != undefined){
+                //             alert('К сожалению, товары закончились')
+                //         }
+                //         else{
+                //             let z = 1
+                //             this.render(z)}
+                //     }) 
+                // }
 
             } else{
                 if(x<2){
@@ -60,38 +111,30 @@ class moreBtn extends CommonList{
                 x++}
                 } return
         })
+
+    })
+    render (z) {
         
-        
-    }
-}
-
-
-class GoodsList extends CommonList {
-
-    constructor () {
-        super () 
-        let goodsPromise = this.fetchGoods()
-
-        goodsPromise.then(()=>{
-            this.render()
-        })
-    } //запрос товаров
-    moreShow (){
-        return new moreBtn(this.items)
-    }
-    render () {
         this.items.forEach(good => {
-            if(this.items.indexOf(good) < 5){
-            good.render()
+            if (z){
+                if(this.items.indexOf(good) < z){
+                    good.render()
+                    }
+                    
             }
+            else {if(this.items.indexOf(good) < 5){
+            good.render()
+            }}
         })
                 let placeToRender = document.querySelector('.more-btn-place')
         if (placeToRender){
+            if (!document.querySelector('.more-btn')){
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'
             moreBtn.classList = 'more-btn'
             moreBtn.onclick = this.moreShow;
             placeToRender.appendChild(moreBtn)
+            }
         }
     }
 }
@@ -169,26 +212,56 @@ basketGoods = []
 class Basket extends CommonList {
     constructor (a){
         super()
-        // return new Promise (()=>{
-        //    basketGoods.find(o => o.name === a.name)
-        // })
-        // .then(()=>{
-        //     basketGoods.push(a)
-        // })
-        // .then(this.render(a))
-        // .catch(()=>
-        //     alert("Товар уже в корзине")
-        // )
-        if (basketGoods.find(o => o.name === a.name)){
-            
-        } else {
-            basketGoods.push(a)
-            console.log(basketGoods)
-        }
-        this.render(a)
+        this.addBasket(a)
+            .then(this.render(a))
+            .catch(()=>{
+                console.log("Товар уже в корзине. Количество обновлено")
+            })
         
     }
-
+    addBasket = (a)=>new Promise ((resolve, reject)=>{
+        if (basketGoods.find(o => o.name === a.name)){
+            reject()
+        } else {
+            basketGoods.push(a)
+            resolve()
+            console.log(basketGoods)
+        }
+    })
+     deleteItem (){
+        let deleteItem = this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+        basketGoods.forEach(function(obj){
+            if(obj.name == deleteItem){
+                let x = basketGoods.indexOf(obj)
+                basketGoods.splice(x, 1)
+    
+            }
+        })
+        
+        this.parentElement.remove()
+        let text = document.querySelector('.total-coast-items-basket')
+        let totalCoast = document.createElement('span')
+            let totalCoastSum = 0;
+            for (let obj of basketGoods){
+                totalCoastSum += obj.totalCoast
+                console.log(basketGoods)
+            }
+        text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+    
+    }
+    
+  deleteBasket(){
+    let cart = document.querySelector('.cart')
+    let cartItems = cart.childNodes.length;
+    console.log(cart.childNodes.length)
+    for (let i = 0; i < cartItems; i++){
+        console.log(i)
+        document.querySelector('.good-item-basket').remove()
+    }
+    document.querySelector('.clean-btn').remove()
+    document.querySelector('.total-coast-items-basket').remove()
+    basketGoods = []
+}
     render(a){
         let placeToRender = document.querySelector('.cart')
         let check 
@@ -230,7 +303,7 @@ class Basket extends CommonList {
                 minus.onclick = minusCountBasket;
                 plus.innerText= "+"
                 plus.onclick = plusCountBasket
-                deleteBtn.onclick = deleteItem;
+                deleteBtn.onclick = this.deleteItem;
 
                 block.classList = 'good-item-basket'
                 goodName.classList = 'good-name-basket'
@@ -258,6 +331,7 @@ class Basket extends CommonList {
             let totalCoast = document.createElement('span')
             let totalCoastSum = 0;
             for (let obj of basketGoods){
+                console.log(obj)
                 totalCoastSum += obj.totalCoast
             }
             totalCoast.classList= 'total-coast-items-basket'
@@ -265,7 +339,7 @@ class Basket extends CommonList {
             let cleanBasket = document.createElement('button')
             cleanBasket.innerText = 'Очистить корзину'
             cleanBasket.setAttribute('class', 'clean-btn')
-            cleanBasket.onclick = deleteBasket;
+            cleanBasket.onclick = this.deleteBasket;
 
             if(!document.querySelector('.total-coast-items-basket')){
                 placeToRender.parentElement.appendChild(totalCoast)
@@ -278,39 +352,7 @@ class Basket extends CommonList {
     }
 
 }
-function deleteItem (){
-    let deleteItem = this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText
-    basketGoods.forEach(function(obj){
-        if(obj.name == deleteItem){
-            let x = basketGoods.indexOf(obj)
-            basketGoods.splice(x, 1)
 
-        }
-    })
-    
-    this.parentElement.remove()
-    let text = document.querySelector('.total-coast-items-basket')
-    let totalCoast = document.createElement('span')
-        let totalCoastSum = 0;
-        for (let obj of basketGoods){
-            totalCoastSum += obj.totalCoast
-            console.log(basketGoods)
-        }
-    text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
-
-}
-function  deleteBasket(){
-    let cart = document.querySelector('.cart')
-    let cartItems = cart.childNodes.length;
-    console.log(cart.childNodes.length)
-    for (let i = 0; i < cartItems; i++){
-        console.log(i)
-        document.querySelector('.good-item-basket').remove()
-    }
-    document.querySelector('.clean-btn').remove()
-    document.querySelector('.total-coast-items-basket').remove()
-    basketGoods = []
-}
 function minusCount(){
     let number = +event.target.nextElementSibling.innerText
     if (number > 1){
