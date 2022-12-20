@@ -2,8 +2,9 @@ class CommonList {
     items = []
     err 
     fetchGoods (x = `${window.location.href}database.json`){
+        console.log(x)
         const result = fetch(x) // сделали запрос на сервер и получили промис
-        console.log(this.err)
+
         return result 
         .then (res =>{ 
             this.res = res
@@ -46,32 +47,35 @@ class GoodsList extends CommonList {
         this.allItems.forEach(good => {
             let exist = document.getElementById(`item №${good.article}`)
             if (exist){
-                b++            
-                console.log(this.items.length)
-                console.log(b)
-                console.log(this.qur)
-                if(this.items.length - b == 3 && b != 3){
+                b++           
+                console.log(this.allItems.length) 
+                console.log(this.allItems.length-b)
+                // console.log(b)
+                // console.log(this.qur)
+                if(this.items.length - b == 3 && b != 3){ // при таком построении баг, в случае если всего 3 позиции в базе и постоянный пуш от database до database2 по кругу
+                    
                     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
                     this.qur++
                     goodsPromise.then(()=>{
-                        this.items.forEach(good => {
+                        this.items.forEach(good => { 
                             this.allItems.push(good)
                         })})
+                    return
 
-                } else if(this.items.length - b == 4 && b != 4){
+                } else if(this.items.length - b == 4 && b != 4){// при таком построении баг, в случае если всего 4 позиции в базе
                     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
                     this.qur++
                     goodsPromise.then(()=>{
                         this.items.forEach(good => {
                             this.allItems.push(good)
                         })})
+                        
 
                 }
 
             } else{
                 if(x<2){
                 good.render()
-                console.log(x)
                 x++}
                 } return
         })
