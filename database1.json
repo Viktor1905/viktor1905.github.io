@@ -4,6 +4,5 @@
     {"name": "Shirt-3", "price": 150, "article" : 11},
     {"name": "Socks-4", "price": 15, "article" : 12},
     {"name": "Jacket-5", "price": 50, "article" : 13}
-
     ]
 }

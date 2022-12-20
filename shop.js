@@ -58,7 +58,7 @@ class GoodsList extends CommonList {
                             this.allItems.push(good)
                         })})
 
-                } else if(this.items.length - b == 2 && b != 2){
+                } else if(this.items.length - b == 4 && b != 4){
                     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
                     this.qur++
                     goodsPromise.then(()=>{
@@ -67,42 +67,6 @@ class GoodsList extends CommonList {
                         })})
 
                 }
-
-                // if(this.items.length - b == 1 && b != 1){
-                //     console.log("x")
-                //     console.log(this.items)
-                //     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
-                //     this.qur++
-                //     goodsPromise.then(()=>{
-                //         if(this.err != undefined){
-                //             alert('К сожалению, товары закончились')
-                //         }
-                //         else{
-                //             let z = 1
-
-                //             if(this.items.length - b == 0 && b != 0){
-                //                 z =2 
-                //             }
-
-
-                //             this.render(z)}
-                //     }) 
-                // }
-
-                // if(b == this.items.length){
-                //     let goodsPromise = this.fetchGoods(`${window.location.href}database`+this.qur+`.json`)
-
-
-                //     this.qur++
-                //     goodsPromise.then(()=>{
-                //         if(this.err != undefined){
-                //             alert('К сожалению, товары закончились')
-                //         }
-                //         else{
-                //             let z = 1
-                //             this.render(z)}
-                //     }) 
-                // }
 
             } else{
                 if(x<2){
@@ -154,7 +118,7 @@ class GoodItem{
     addBasket = (() => {
         this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText 
         this.totalCoast = this.price * this.number
-       return new Basket(this)
+       return basket.addItem(this)
     })
 
 
@@ -212,12 +176,16 @@ basketGoods = []
 class Basket extends CommonList {
     constructor (a){
         super()
-        this.addBasket(a)
-            .then(this.render(a))
-            .catch(()=>{
-                console.log("Товар уже в корзине. Количество обновлено")
-            })
+       
+        this.init(a)
         
+    }
+    addItem = (a) =>{
+        this.addBasket(a)
+        .then(this.render(a))
+        .catch(()=>{
+        console.log("Товар уже в корзине. Количество обновлено")
+    })
     }
     addBasket = (a)=>new Promise ((resolve, reject)=>{
         if (basketGoods.find(o => o.name === a.name)){
@@ -237,7 +205,6 @@ class Basket extends CommonList {
     
             }
         })
-        
         this.parentElement.remove()
         let text = document.querySelector('.total-coast-items-basket')
         let totalCoast = document.createElement('span')
@@ -251,19 +218,22 @@ class Basket extends CommonList {
     }
     
   deleteBasket(){
-    let cart = document.querySelector('.cart')
+    let cart = document.querySelector('.good-item-list')
     let cartItems = cart.childNodes.length;
     console.log(cart.childNodes.length)
     for (let i = 0; i < cartItems; i++){
-        console.log(i)
+
         document.querySelector('.good-item-basket').remove()
     }
-    document.querySelector('.clean-btn').remove()
-    document.querySelector('.total-coast-items-basket').remove()
     basketGoods = []
+    let text = document.querySelector('.total-coast-items-basket')
+    text.innerText = `Итоговая стоимость корзины:`+"0";
+    let list = document.querySelector(".cart-list")
+    list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
+    return
 }
     render(a){
-        let placeToRender = document.querySelector('.cart')
+        let placeToRender = document.querySelector('.good-item-list')
         let check 
             check = document.getElementById(`item art:${a.article}`)
             if(check){
@@ -281,6 +251,7 @@ class Basket extends CommonList {
                 
             }  
            if(placeToRender){
+
                 let block = document.createElement('div')
                 let goodName = document.createElement('span')
                 let goodPrice = document.createElement('span')
@@ -326,30 +297,71 @@ class Basket extends CommonList {
                 block.appendChild(coast)
                 block.appendChild(deleteBtn)
 
-
-            }
-            let totalCoast = document.createElement('span')
-            let totalCoastSum = 0;
-            for (let obj of basketGoods){
-                console.log(obj)
-                totalCoastSum += obj.totalCoast
-            }
-            totalCoast.classList= 'total-coast-items-basket'
-            totalCoast.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
-            let cleanBasket = document.createElement('button')
-            cleanBasket.innerText = 'Очистить корзину'
-            cleanBasket.setAttribute('class', 'clean-btn')
-            cleanBasket.onclick = this.deleteBasket;
-
-            if(!document.querySelector('.total-coast-items-basket')){
-                placeToRender.parentElement.appendChild(totalCoast)
-                placeToRender.parentElement.appendChild(cleanBasket)
-            } else{
+                let totalCoastSum = 0;
+                for (let obj of basketGoods){
+                    totalCoastSum += obj.totalCoast
+                }
                 let text = document.querySelector('.total-coast-items-basket')
                 text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+                return
             }
 
+        
+
     }
+    init () {   
+        let block = document.createElement('div')
+        block.classList.add('cart')
+        let goodItemList = document.createElement('div')
+        goodItemList.classList.add('good-item-list')
+
+        const list = document.createElement('div')
+        list.classList.add('cart-list')
+        block.appendChild(list)
+        list.appendChild(goodItemList)
+
+
+        let ButtonInstnce = new Button ('Корзина', () => {
+            list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
+        })
+
+        block.appendChild(ButtonInstnce.getTemplate('cart-show-btn'))        
+        console.log(ButtonInstnce)
+        
+        let placeToRender = document.querySelector('header')
+        if(placeToRender){
+            placeToRender.appendChild(block)
+        }
+
+        let basketManag = document.createElement('div')
+        basketManag.setAttribute('class', 'basket-manag')
+
+        let totalCoast = document.createElement('span')
+        let totalCoastSum = 0;
+        for (let obj of basketGoods){
+            console.log(obj)
+            totalCoastSum += obj.totalCoast
+        }
+        placeToRender = document.querySelector('.cart-list')
+
+        totalCoast.classList= 'total-coast-items-basket'
+        totalCoast.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        let cleanBasket = document.createElement('button')
+        cleanBasket.innerText = 'Очистить корзину'
+        cleanBasket.setAttribute('class', 'btn clean-btn')
+        cleanBasket.onclick = this.deleteBasket;
+
+        if(!document.querySelector('.total-coast-items-basket')){
+            placeToRender.appendChild(basketManag)
+            basketManag.appendChild(totalCoast)
+            basketManag.appendChild(cleanBasket)
+        } else{
+            let text = document.querySelector('.total-coast-items-basket')
+            text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        }
+        
+    }
+
 
 }
 
@@ -374,15 +386,14 @@ function minusCountBasket (){
     event.target.nextElementSibling.innerText = number
     let name = event.target.parentElement.previousElementSibling.previousElementSibling.innerText
     for (let obj in basketGoods){
+        console.log(obj)
         if(name == basketGoods[obj].name){
          basketGoods[obj].number = number
          basketGoods[obj].totalCoast = basketGoods[obj].number * basketGoods[obj].price
+         this.parentElement.nextElementSibling.innerText = `Стоимость: ${basketGoods[obj].totalCoast}`
         }
+
      }
-    for (let obj in basketGoods){
-        console.log(basketGoods[obj].totalCoast)
-        this.parentElement.nextElementSibling.innerText = `Стоимость: ${basketGoods[obj].totalCoast}`
-    }
 
         let text = document.querySelector('.total-coast-items-basket')
         let totalCoast = document.createElement('span')
@@ -404,13 +415,9 @@ function plusCountBasket(){
        if(name == basketGoods[obj].name){
         basketGoods[obj].number = number
         basketGoods[obj].totalCoast = basketGoods[obj].number * basketGoods[obj].price
-       }
-    }
-    for (let obj in basketGoods){
-        // basketGoods[obj].number = number
-        basketGoods[obj].totalCoast = basketGoods[obj].number * basketGoods[obj].price
-        console.log(basketGoods[obj].totalCoast)
         this.parentElement.nextElementSibling.innerText = `Стоимость: ${basketGoods[obj].totalCoast}`
+       }
+
     }
 
         let text = document.querySelector('.total-coast-items-basket')
@@ -424,3 +431,7 @@ function plusCountBasket(){
 }
 
 new GoodsList ();
+basket = new Basket()
+
+
+

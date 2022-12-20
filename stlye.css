@@ -1,3 +1,7 @@
+header{
+    background-color: rgb(99, 193, 243);
+    height: auto;
+}
 .goods-list{
     display: grid;
     grid-gap: 15px 15px;
@@ -8,7 +12,9 @@
     flex-direction: column;
     align-items: center;
 }
-
+.count-btn{
+    background-color: transparent;
+}
 .good-picture{
     width: 100px;
     height: 100px;
@@ -29,6 +35,50 @@
 .cart{
     display: flex;
     margin-top: 20px;
+    justify-content: space-between;
+}
+.cart-list{
+    display: none;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.btn{
+    background-color: blue;
+    padding: 5px;
+    border: none;
+    color: white;
+    border-radius: 20% ;
+    -webkit-border-radius: 20% ;
+    -moz-border-radius: 20% ;
+    -ms-border-radius: 20% ;
+    -o-border-radius: 20% ;
+}
+.cart-show-btn{
+    position: absolute;
+    right:  10px;
+    top: 14px;
+
+}
+.cart-list.shown{
+    height: 155px;
+}
+.shown{
+    display: flex;
+
+}
+.good-item-list{
+    display: flex;
+
+}
+.basket-manag{
+    width: 100%;
+    display: flex;
+
+    align-self: end;
+    justify-content: end;
+}
+.clean-btn{
+    width: 90px;
 }
 .good-item-basket{
     display: flex;
@@ -36,9 +86,8 @@
     margin-right: 20px;
 }
 .total-coast-items-basket{
-    width: 100%;
+    margin: 0 100px 0 0;
     display: block;
-    margin-top: 20px;
 }
 .more-btn-place{
     display: flex;
