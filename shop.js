@@ -122,7 +122,7 @@ class GoodItem{
     addBasket = (() => {
         this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText 
         this.totalCoast = this.price * this.number
-       return basket.addItem(this)
+       return CartInstance.addItem(this)
     })
 
 
@@ -180,13 +180,12 @@ basketGoods = []
 class Basket extends CommonList {
     constructor (a){
         super()
-       
-        this.init(a)
+        this.render(a)
         
     }
     addItem = (a) =>{
         this.addBasket(a)
-        .then(this.render(a))
+        .then(this.init(a))
         .catch(()=>{
         console.log("Товар уже в корзине. Количество обновлено")
     })
@@ -236,7 +235,7 @@ class Basket extends CommonList {
     list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
     return
 }
-    render(a){
+    init(a){
         let placeToRender = document.querySelector('.good-item-list')
         let check 
             check = document.getElementById(`item art:${a.article}`)
@@ -255,6 +254,7 @@ class Basket extends CommonList {
                 
             }  
            if(placeToRender){
+                
 
                 let block = document.createElement('div')
                 let goodName = document.createElement('span')
@@ -314,7 +314,7 @@ class Basket extends CommonList {
         
 
     }
-    init () {   
+    render () {   
         let block = document.createElement('div')
         block.classList.add('cart')
         let goodItemList = document.createElement('div')
@@ -435,8 +435,8 @@ function plusCountBasket(){
 
 }
 
-new GoodsList ();
-basket = new Basket()
+const ListInstance  = new GoodsList ();
+const CartInstance = new Basket()
 
 
 
