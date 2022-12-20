@@ -22,14 +22,20 @@ header>span{
     flex-direction: column;
     align-items: center;
     background-color: rgb(232, 232, 232);
+    padding: 10px;
 }
 .count-btn{
+    cursor: pointer;
     background-color: transparent;
+}
+.good-item-basket>.count-items-basket>.count-btn{
+    color: white;
 }
 .good-picture{
     width: 150px;
     height: 150px;
 }
+
 .count-items{
     display: grid;
     grid-template-columns: repeat(3, 2fr);
@@ -53,6 +59,9 @@ header>span{
     flex-wrap: wrap;
     width: 100%;
 }
+.basket-btn:active{
+    background-color: green;
+}
 .btn{
     background-color: rgb(82, 82, 232);
     padding: 5px;
@@ -63,6 +72,15 @@ header>span{
     -moz-border-radius: 7px ;
     -ms-border-radius: 7px ;
     -o-border-radius: 7px ;
+    cursor: pointer;
+}
+
+.delete-item-btn{
+    background-color: rgb(2, 2, 98);
+    margin: 10px 0 0 0;
+}
+.delete-item-btn:active{
+    background-color: red;
 }
 .cart-show-btn{
     position: absolute;
@@ -72,7 +90,7 @@ header>span{
 
 }
 .cart-list.shown{
-    height: 155px;
+    height: 205px;
     padding-right: 7px;
 }
 .shown{
@@ -86,14 +104,18 @@ header>span{
 .basket-manag{
     width: 100%;
     display: flex;
-
+    margin: 0 0 10px 0;
     align-self: end;
     justify-content: end;
 }
 .clean-btn{
     width: 90px;
 }
+.clean-btn:active{
+    background-color: red;
+}
 .good-item-basket{
+    color: white;
     display: flex;
     flex-direction: column;
     margin-right: 20px;
@@ -108,11 +130,9 @@ header>span{
     align-items: center;
 }
 .more-btn{
-    background-color: aqua;
     align-self: center;
     padding: 0;
     height: auto;
-    border: 1px solid black;
     width: 59px;
 
 }

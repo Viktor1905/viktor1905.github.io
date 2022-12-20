@@ -99,7 +99,7 @@ class GoodsList extends CommonList {
             if (!document.querySelector('.more-btn')){
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'
-            moreBtn.classList = 'more-btn'
+            moreBtn.classList = 'btn more-btn'
             moreBtn.onclick = this.moreShow;
             placeToRender.appendChild(moreBtn)
             }
@@ -146,7 +146,7 @@ class GoodItem{
             goodPrice.innerHTML = ` ${this.price}`
             goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
             goodBtn.innerText = 'В корзину' 
-            goodBtn.classList = 'basket-btn'
+            goodBtn.classList = 'btn basket-btn'
             goodBtn.onclick = this.addBasket;
             minus.innerText= "-"
             minus.onclick = minusCount;
@@ -217,7 +217,7 @@ class Basket extends CommonList {
                 totalCoastSum += obj.totalCoast
                 console.log(basketGoods)
             }
-        text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
     
     }
     
@@ -231,7 +231,7 @@ class Basket extends CommonList {
     }
     basketGoods = []
     let text = document.querySelector('.total-coast-items-basket')
-    text.innerText = `Итоговая стоимость корзины:`+"0";
+    text.innerText = `Итоговая стоимость корзины: `+"0";
     let list = document.querySelector(".cart-list")
     list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
     return
@@ -249,7 +249,7 @@ class Basket extends CommonList {
                         totalCoastSum += obj.totalCoast
                     }
                     let text = document.querySelector('.total-coast-items-basket')
-                    text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+                    text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
                     return
                 }
                 
@@ -274,6 +274,7 @@ class Basket extends CommonList {
                 itemsNumber.innerText = `${a.number}`
                 coast.innerText = `Стоимость: ${a.number * a.price}`
                 deleteBtn.innerText = "Удалить предмет"
+                deleteBtn.classList = 'btn delete-item-btn'
                 minus.innerText= "-"
                 minus.onclick = minusCountBasket;
                 plus.innerText= "+"
@@ -306,7 +307,7 @@ class Basket extends CommonList {
                     totalCoastSum += obj.totalCoast
                 }
                 let text = document.querySelector('.total-coast-items-basket')
-                text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+                text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
                 return
             }
 
@@ -349,7 +350,7 @@ class Basket extends CommonList {
         placeToRender = document.querySelector('.cart-list')
 
         totalCoast.classList= 'total-coast-items-basket'
-        totalCoast.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        totalCoast.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
         let cleanBasket = document.createElement('button')
         cleanBasket.innerText = 'Очистить корзину'
         cleanBasket.setAttribute('class', 'btn clean-btn')
@@ -361,7 +362,7 @@ class Basket extends CommonList {
             basketManag.appendChild(cleanBasket)
         } else{
             let text = document.querySelector('.total-coast-items-basket')
-            text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+            text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
         }
         
     }
@@ -405,7 +406,7 @@ function minusCountBasket (){
             for (let obj of basketGoods){
                 totalCoastSum += obj.totalCoast
             }
-        text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
 }
 
 
@@ -430,7 +431,7 @@ function plusCountBasket(){
             for (let obj of basketGoods){
                 totalCoastSum += obj.totalCoast
             }
-        text.innerText = `Итоговая стоимость корзины:`+totalCoastSum;
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
 
 }
 
