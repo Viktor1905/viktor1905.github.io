@@ -57,11 +57,11 @@ header>span{
     padding: 5px;
     border: none;
     color: white;
-    border-radius: 20% ;
-    -webkit-border-radius: 20% ;
-    -moz-border-radius: 20% ;
-    -ms-border-radius: 20% ;
-    -o-border-radius: 20% ;
+    border-radius: 7px ;
+    -webkit-border-radius: 7px ;
+    -moz-border-radius: 7px ;
+    -ms-border-radius: 7px ;
+    -o-border-radius: 7px ;
 }
 .cart-show-btn{
     position: absolute;
