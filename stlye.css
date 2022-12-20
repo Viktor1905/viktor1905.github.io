@@ -2,7 +2,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 header{
-    background-color: rgb(99, 193, 243);
+    background-color: blue;
     height: auto;
 }
 header>span{
@@ -21,6 +21,7 @@ header>span{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgb(232, 232, 232);
 }
 .count-btn{
     background-color: transparent;
@@ -53,7 +54,7 @@ header>span{
     width: 100%;
 }
 .btn{
-    background-color: blue;
+    background-color: rgb(82, 82, 232);
     padding: 5px;
     border: none;
     color: white;
@@ -65,12 +66,14 @@ header>span{
 }
 .cart-show-btn{
     position: absolute;
-    right:  10px;
+    right:  15px;
     top: 14px;
+
 
 }
 .cart-list.shown{
     height: 155px;
+    padding-right: 7px;
 }
 .shown{
     display: flex;
@@ -98,6 +101,7 @@ header>span{
 .total-coast-items-basket{
     margin: 0 100px 0 0;
     display: block;
+    color: white;
 }
 .more-btn-place{
     display: flex;
