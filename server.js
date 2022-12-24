@@ -1,5 +1,5 @@
 const http = require('http');
-const fs = require('fs')
+const fs = require('fs') 
 
 const server = http.createServer((req, res) => { // req - все данные о нашем запросе    res - ответ (то, что отдаим клиенту) 
     console.log(req.url)// дает возможность посмотреть откуда идут запросы
@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => { // req - все данные о
     let reJs =/.*\.js$/
     let reJson=/.*\.json/
     let reImg=/.*\.jpg|.*\.jpeg|.*\.png|.*\.ico/
-    console.log(a.match(rePublic))
+    console.log('x'+a.match(reJs))
     try {
         if (a === './'){
             let b = fs.readFileSync('public/index.html')
@@ -18,7 +18,8 @@ const server = http.createServer((req, res) => { // req - все данные о
             let b = fs.readFileSync(a)
             res.end(b)
         } else if(a.match(reJson)!=null){
-            let b = fs.readFileSync('json'+a)
+            a = req.url
+            let b = fs.readFileSync('.'+a)
             res.end(b)
         } else if(a.match(reImg)!=null){
             let b = fs.readFileSync(a)
