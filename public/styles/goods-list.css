@@ -1,0 +1,77 @@
+.goods-list {
+    display: grid;
+    grid-gap: 35px 45px;
+    grid-template-columns: repeat(auto-fill, minmax(max(150px), 1fr));
+    grid-auto-columns: auto;
+}
+
+.good-item {
+    align-items: center;
+    background-color: rgb(232, 232, 232);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    position: relative;
+}
+
+.good-picture {
+    height: 150px;
+    width: 150px;
+}
+
+.count-items {
+    display: grid;
+    grid-gap: 0 5px;
+    grid-template-columns: repeat(3, 2fr);
+    text-align: center;
+}
+
+.count-btn {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+.count-items span {
+    font-size: 20px;
+}
+
+.more-btn-place {
+    align-items: center;
+    display: flex;
+}
+
+.more-btn {
+    align-self: center;
+    height: auto;
+    padding: 0;
+    width: 59px;
+}
+
+.mes-cart {
+    align-items: center;
+    background: rgba(35, 35, 35, 0.6);
+    border-radius: 5px;
+    bottom: 80px;
+    color: white;
+    display: flex;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    width: 70%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.basket-btn:active {
+    background-color: green;
+}
+
+@media (max-width: 1280px) {
+    .goods-list {
+        grid-gap: 15px 15px;
+    }
+}

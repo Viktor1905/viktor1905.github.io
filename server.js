@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => { // req - все данные о
             let b = fs.readFileSync(a)
             res.end(b)
         } else if(a.match(rePublic)!=null){
-            let b = fs.readFileSync('public'+req.url)
+            let b = fs.readFileSync('.'+req.url)
             res.end(b)
         } else {
             let b  = fs.readFileSync(a) 
