@@ -1,5 +1,5 @@
 
-basketGoods = []
+let basketGoods = []
 class Basket extends CommonList {
     constructor (a){
         super()
@@ -25,7 +25,7 @@ class Basket extends CommonList {
         }
     })
      deleteItem (){
-        let deleteItem = this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+        let deleteItem = this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText // Это лучше исправить через event и btn 
         basketGoods.forEach(function(obj){
             if(obj.name == deleteItem){
                 let x = basketGoods.indexOf(obj)
@@ -158,7 +158,7 @@ class Basket extends CommonList {
             button.appendChild(count)
         }
     }
-    render () {   
+    render () {   //сделать 
         let block = document.createElement('div')
         block.classList.add('cart')
         let goodItemList = document.createElement('div')
