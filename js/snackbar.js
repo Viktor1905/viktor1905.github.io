@@ -6,7 +6,7 @@ let snackbar =  (event, good)=>{
         let placeToRender = event.parentElement
         let mes = document.createElement('div')
         if(Basket.basketGoods.find(goodInBasket => goodInBasket.name === good.name)){
-            mes.innerText = 'Товар уже в корзине'
+            mes.innerText = 'Количество товара обновлено'
         }else{
         mes.innerText = 'Товар добавлен в корзину'}
         mes.classList.add("mes-cart")

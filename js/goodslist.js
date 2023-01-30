@@ -14,7 +14,7 @@ class GoodsList extends CommonList {
         })
     } //запрос товаров
     qur = 1
-    hideShowMoreBtn(){
+    hideShowMoreBtn() {
         let btn = document.querySelector(".more-btn")
         btn.remove()
     }
@@ -39,7 +39,7 @@ class GoodsList extends CommonList {
                     }
                     return
 
-                } else if(this.items.length - _b == 4 && _b != 4){
+                } else if(this.items.length - _b == 4 && _b != 4) {
 
                       if (!this.err){
                         let goodsPromise = this.fetchGoods(`${window.location.href}json/database`+this.qur+`.json`)
@@ -55,7 +55,7 @@ class GoodsList extends CommonList {
                 }
 
             } else{
-                if(_x<2){
+                if(_x<2) {
                 good.render(good)
                 this.placeToRender.before(good.block)
                 _x++}
