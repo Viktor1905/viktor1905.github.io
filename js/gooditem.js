@@ -1,4 +1,3 @@
-
 class GoodItem{
     name = ''
     price = 0
@@ -12,7 +11,7 @@ class GoodItem{
         this.article = article
     }
     addBasket = (() => {
-        this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText 
+        this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText // заменить на конструкцию с ID
         this.totalCoast = this.price * this.number
         let x = event.target
         snackbar(x, this)

@@ -1,10 +1,11 @@
 let opacityNumb = 10
 
-let snackbar =  (event, obj)=>{
+let snackbar =  (event, good)=>{
+    console.log(good)
     if(!event.parentElement.querySelector(".mes-cart")){
         let placeToRender = event.parentElement
         let mes = document.createElement('div')
-        if(basketGoods.find(o => o.name === obj.name)){
+        if(Basket.basketGoods.find(goodInBasket => goodInBasket.name === good.name)){
             mes.innerText = 'Товар уже в корзине'
         }else{
         mes.innerText = 'Товар добавлен в корзину'}

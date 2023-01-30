@@ -1,5 +1,3 @@
-
-
 function minusCount(){
     let number = +event.target.nextElementSibling.innerText
     if (number > 1){
@@ -20,12 +18,11 @@ function minusCountBasket (){
     number -= 1}
     event.target.nextElementSibling.innerText = number
     let name = event.target.parentElement.previousElementSibling.previousElementSibling.innerText
-    for (let obj in basketGoods){
-        console.log(obj)
-        if(name == basketGoods[obj].name){
-         basketGoods[obj].number = number
-         basketGoods[obj].totalCoast = basketGoods[obj].number * basketGoods[obj].price
-         this.parentElement.nextElementSibling.innerText = `Стоимость: ${basketGoods[obj].totalCoast}`
+    for (let obj in Basket.basketGoods){
+        if(name == Basket.basketGoods[obj].name){
+            Basket.basketGoods[obj].number = number
+            Basket.basketGoods[obj].totalCoast = Basket.basketGoods[obj].number * Basket.basketGoods[obj].price
+            this.parentElement.nextElementSibling.innerText = `Стоимость: ${Basket.basketGoods[obj].totalCoast}`
         }
 
      }
@@ -33,7 +30,7 @@ function minusCountBasket (){
         let text = document.querySelector('.total-coast-items-basket')
         let totalCoast = document.createElement('span')
             let totalCoastSum = 0;
-            for (let obj of basketGoods){
+            for (let obj of Basket.basketGoods){
                 totalCoastSum += obj.totalCoast
             }
         text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
@@ -46,11 +43,11 @@ function plusCountBasket(){
     event.target.previousElementSibling.innerText = number
     console.log(this.parentElement.nextElementSibling)
     let name = event.target.parentElement.previousElementSibling.previousElementSibling.innerText
-    for (let obj in basketGoods){
-       if(name == basketGoods[obj].name){
-        basketGoods[obj].number = number
-        basketGoods[obj].totalCoast = basketGoods[obj].number * basketGoods[obj].price
-        this.parentElement.nextElementSibling.innerText = `Стоимость: ${basketGoods[obj].totalCoast}`
+    for (let obj in Basket.basketGoods){
+       if(name == Basket.basketGoods[obj].name){
+        Basket.basketGoods[obj].number = number
+        Basket.basketGoods[obj].totalCoast = Basket.basketGoods[obj].number * Basket.basketGoods[obj].price
+        this.parentElement.nextElementSibling.innerText = `Стоимость: ${Basket.basketGoods[obj].totalCoast}`
        }
 
     }
@@ -58,7 +55,7 @@ function plusCountBasket(){
         let text = document.querySelector('.total-coast-items-basket')
         let totalCoast = document.createElement('span')
             let totalCoastSum = 0;
-            for (let obj of basketGoods){
+            for (let obj of Basket.basketGoods){
                 totalCoastSum += obj.totalCoast
             }
         text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
@@ -67,6 +64,7 @@ function plusCountBasket(){
 
 const ListInstance  = new GoodsList ();
 const CartInstance = new Basket()
+
 
 
 

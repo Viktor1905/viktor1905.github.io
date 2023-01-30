@@ -1,4 +1,3 @@
-
 class GoodsList extends CommonList {
     allItems = []
 
