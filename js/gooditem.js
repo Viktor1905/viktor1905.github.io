@@ -4,6 +4,7 @@ class GoodItem{
     number = 1
     totalCoast = 0
     article 
+    block = document.createElement('div')
 
     constructor({name, price,article}){
         this.name = name
@@ -16,60 +17,107 @@ class GoodItem{
         let x = event.target
         snackbar(x, this)
         // this.itemrefresh(x)
-       return CartInstance.addItem(this)
+       return new GoodInBasket(this)
     })
     // itemrefresh(x){
     //     console.log(x.parentElement.querySelector('.basket-btn').classList.add('hide'))
     //     x.parentElement.querySelector('.basket-btn')
     // } ЗАЧАТОК замены кнопки на счетчик удаляющи/добавляющий элементы сразу
 
-    render() {
-        let placeToRender = document.querySelector('.more-btn-place')
+//     render() {
+//         let placeToRender = document.querySelector('.more-btn-place')
 
-        if (placeToRender){
-            let block = document.createElement('div')
-            let goodName = document.createElement('span')
-            let goodPrice = document.createElement('span')
-            let goodPicture = document.createElement('img')
-            let goodBtn = document.createElement('button')
-            let countItems = document.createElement('div')
-                let minus = document.createElement('button')
-                let itemsNumber = document.createElement('span')
-                let plus = document.createElement('button')
+//         if (placeToRender){
+//             let block = document.createElement('div')
+//             let goodName = document.createElement('span')
+//             let goodPrice = document.createElement('span')
+//             let goodPicture = document.createElement('img')
+//             let goodBtn = document.createElement('button')
+//             let countItems = document.createElement('div')
+//             let minus = document.createElement('button')
+//             let itemsNumber = document.createElement('span')
+//             let plus = document.createElement('button')
 
 
-            goodName.innerHTML = `${this.name}`
-            goodName.setAttribute('id', `item №${this.article}`)
-            goodPrice.innerHTML = ` ${this.price}`
-            goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
-            goodBtn.innerText = 'В корзину' 
-            goodBtn.classList = 'btn basket-btn'
-            goodBtn.onclick = this.addBasket;
-            minus.innerText= "-"
-            minus.onclick = minusCount;
-            itemsNumber.innerText = this.number
-            plus.innerText= "+"
+//             goodName.innerHTML = `${this.name}`
+//             goodName.setAttribute('id', `item №${this.article}`)
+//             goodPrice.innerHTML = ` ${this.price}`
+//             goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
+//             goodBtn.innerText = 'В корзину' 
+//             goodBtn.classList = 'btn basket-btn'
+//             goodBtn.onclick = this.addBasket;
+//             minus.innerText= "-"
+//             minus.onclick = minusCount;
+//             itemsNumber.innerText = this.number
+//             plus.innerText= "+"
             
-            plus.onclick = plusCount
+//             plus.onclick = plusCount
 
-            block.classList = 'good-item'
-            goodName.classList = 'good-name'
-            goodPrice.classList = 'good-price'
-            goodPicture.classList = 'good-picture'
-            countItems.classList = 'count-items'
-            minus.classList = 'count-btn'
-            plus.classList = 'count-btn'
+//             block.classList = 'good-item'
+//             goodName.classList = 'good-name'
+//             goodPrice.classList = 'good-price'
+//             goodPicture.classList = 'good-picture'
+//             countItems.classList = 'count-items'
+//             minus.classList = 'count-btn'
+//             plus.classList = 'count-btn'
 
 
-            placeToRender.before(block)
-            block.appendChild(goodPicture)
-            block.appendChild(goodName)
-            block.appendChild(goodPrice)
-            block.appendChild(countItems)
-            countItems.appendChild(minus)
-            countItems.appendChild(itemsNumber)
-            countItems.appendChild(plus)
-            block.appendChild(goodBtn)
-        }
+//             placeToRender.before(block)
+//             block.appendChild(goodPicture)
+//             block.appendChild(goodName)
+//             block.appendChild(goodPrice)
+//             block.appendChild(countItems)
+//             countItems.appendChild(minus)
+//             countItems.appendChild(itemsNumber)
+//             countItems.appendChild(plus)
+//             block.appendChild(goodBtn)
+//         }
+//     }
+// }
+
+render() {
+        let goodName = document.createElement('span')
+        let goodPrice = document.createElement('span')
+        let goodPicture = document.createElement('img')
+        let goodBtn = document.createElement('button')
+        let countItems = document.createElement('div')
+        let minus = document.createElement('button')
+        let itemsNumber = document.createElement('span')
+        let plus = document.createElement('button')
+
+
+        goodName.innerHTML = `${this.name}`
+        goodName.setAttribute('id', `item №${this.article}`)
+        goodPrice.innerHTML = ` ${this.price}`
+        goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
+        goodBtn.innerText = 'В корзину' 
+        goodBtn.classList = 'btn basket-btn'
+        goodBtn.onclick = this.addBasket;
+        minus.innerText= "-"
+        minus.onclick = minusCount;
+        itemsNumber.innerText = this.number
+        plus.innerText= "+"
+        
+        plus.onclick = plusCount
+
+        this.block.classList = 'good-item'
+        goodName.classList = 'good-name'
+        goodPrice.classList = 'good-price'
+        goodPicture.classList = 'good-picture'
+        countItems.classList = 'count-items'
+        minus.classList = 'count-btn'
+        plus.classList = 'count-btn'
+
+
+
+        this.block.appendChild(goodPicture)
+        this.block.appendChild(goodName)
+        this.block.appendChild(goodPrice)
+        this.block.appendChild(countItems)
+        countItems.appendChild(minus)
+        countItems.appendChild(itemsNumber)
+        countItems.appendChild(plus)
+        this.block.appendChild(goodBtn)
+    
     }
 }

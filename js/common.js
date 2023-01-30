@@ -16,6 +16,7 @@ class CommonList {
         .then(data =>{
             // тут хранится объект из операции выше
             this.items = data.data.map((cur) => { 
+                console.log(cur)
                 return new GoodItem(cur) 
             })// в items мы поместили массив, который переделали с помощью gooditem в отдельные объекты, data.data - чтоб получить объект data - все наши массивы (нужные для операции), которые хранятся в переменной data, в начале данного then
         })

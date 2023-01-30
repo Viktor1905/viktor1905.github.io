@@ -62,8 +62,8 @@ function plusCountBasket(){
 
 }
 
-const ListInstance  = new GoodsList ();
-const CartInstance = new Basket()
+const ListInstance  = new GoodsList() ;
+const CartInstance = new Basket();
 
 
 

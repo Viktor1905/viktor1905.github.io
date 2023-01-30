@@ -1,5 +1,6 @@
 class GoodsList extends CommonList {
     allItems = []
+    placeToRender = document.querySelector('.more-btn-place')
 
     constructor () {
         super () 
@@ -56,6 +57,7 @@ class GoodsList extends CommonList {
             } else{
                 if(_x<2){
                 good.render()
+                this.placeToRender.before(good.block)
                 _x++}
                 } 
             if (this.allItems.length - _b == 0){
@@ -64,26 +66,27 @@ class GoodsList extends CommonList {
                         let goodsEnd = document.createElement('div')
                         goodsEnd.classList = 'goods-end'
                         goodsEnd.innerText = "Вы просмотрели все наши товары"
-                        let placeToRender = document.querySelector('.more-btn-place')
-                        placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
+                        this.placeToRender = document.querySelector('.more-btn-place')
+                        this.placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
                     }
             }
         })
     })
     render () {
+
         this.allItems.forEach(good => {
         if(this.allItems.indexOf(good) < 5){
             good.render()
+            this.placeToRender.before(good.block)
             }
         })
-        let placeToRender = document.querySelector('.more-btn-place')
-        if (placeToRender){
+        if (this.placeToRender){
             if (!document.querySelector('.more-btn')){
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'
             moreBtn.classList = 'btn more-btn'
             moreBtn.onclick = this.moreShow;
-            placeToRender.appendChild(moreBtn)
+            this.placeToRender.appendChild(moreBtn)
             }
         }
     }
