@@ -7,7 +7,6 @@ class Basket extends CommonList {
         this.render(goods)
     }
 
-
     deleteBasket() {
         let cart = document.querySelector('.good-item-list')
         let cartItems = cart.childNodes.length;

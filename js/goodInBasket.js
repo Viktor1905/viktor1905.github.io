@@ -39,6 +39,7 @@ class GoodInBasket{
 
     deleteItem(good) {
         let deleteItem = document.getElementById(`item art:${good.article}`) // Это лучше исправить через event и btn 
+        console.log(deleteItem)
         Basket.basketGoods.forEach(function(item) {
             if(item.article == good.article) {
                 let itemIndex = Basket.basketGoods.indexOf(good)
@@ -49,16 +50,72 @@ class GoodInBasket{
             document.querySelector('.count-basket').innerText= Basket.basketGoods.length
         }
         deleteItem.remove()
+
         Basket.totalCoastSum -= good.totalCoast
         
-
         let text = document.querySelector('.total-coast-items-basket')
-        text.innerText = `Итоговая стоимость корзины: `+Basket.totalCoastSum;
+        text.innerText = `Итоговая стоимость корзины: `+ Basket.totalCoastSum;
 
         if(!document.querySelector('.good-item-basket')){
             document.querySelector('.basket-manag').remove()
         }
 
+    }
+    
+    minusCountBasket(good, event) {
+        let thisItem = document.getElementById(`item art:${good.article}`)
+        let number = good.number
+
+        if (number > 1){
+            number -= 1
+        } else if(number = 1){
+            this.deleteItem(this.good)
+            return
+        }
+        good.number = number
+        thisItem.querySelector(`.count-items-basket-number`).innerText = number
+
+        for (let items in Basket.basketGoods) {
+            if(good.name == Basket.basketGoods[items].name) {
+                Basket.basketGoods[items].number = number
+                Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
+                thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
+            }
+
+        }
+        let totalCoastSum = 0;
+        for (let items of Basket.basketGoods) {
+            totalCoastSum += items.totalCoast
+        }
+
+        let text = document.querySelector('.total-coast-items-basket')
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
+    }
+
+    plusCountBasket(good, event) {
+        let thisItem = document.getElementById(`item art:${good.article}`)
+        let number = +good.number
+
+        number += 1
+        good.number = number
+        thisItem.querySelector(`.count-items-basket-number`).innerText = number
+
+        for (let items in Basket.basketGoods) {
+            if(good.name == Basket.basketGoods[items].name) {
+                Basket.basketGoods[items].number = number
+                Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
+                thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
+            }
+
+        }
+
+        let totalCoastSum = 0;
+        for (let items of Basket.basketGoods) {
+                totalCoastSum += items.totalCoast
+        }
+
+        let text = document.querySelector('.total-coast-items-basket')
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
     }
 
     render(good) {
@@ -103,7 +160,7 @@ class GoodInBasket{
             
             let minus = document.createElement('button')
             minus.innerText= "-"
-            minus.onclick = minusCountBasket;
+            minus.onclick = this.minusCountBasket.bind(this, good);
             minus.classList = 'count-btn'
 
             let itemsNumber = document.createElement('span')
@@ -112,7 +169,8 @@ class GoodInBasket{
 
             let plus = document.createElement('button')
             plus.innerText= "+"
-            plus.onclick = plusCountBasket
+            plus.onclick = this.plusCountBasket.bind(this, good);
+            // plus.onclick = plusCountBasket;
             plus.classList = 'count-btn'
 
             let coast = document.createElement('span')
@@ -122,7 +180,7 @@ class GoodInBasket{
             let deleteBtn = document.createElement('button')
             deleteBtn.innerText = "Удалить предмет"
             deleteBtn.classList = 'btn delete-item-btn'
-            deleteBtn.onclick = this.deleteItem.bind(event, good);
+            deleteBtn.onclick = this.deleteItem.bind(this, good);
 
             let totalCoastSum = 0;
             for (let obj of Basket.basketGoods) {
@@ -150,4 +208,5 @@ class GoodInBasket{
             return
         }
     }
+
 }
