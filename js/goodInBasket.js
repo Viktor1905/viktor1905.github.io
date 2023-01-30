@@ -58,7 +58,10 @@ class GoodInBasket{
 
         if(!document.querySelector('.good-item-basket')){
             document.querySelector('.basket-manag').remove()
+            document.querySelector('.count-basket').remove()
+            document.querySelector('.cart-list').classList.toggle('shown')
         }
+        
 
     }
     
