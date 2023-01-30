@@ -1,5 +1,5 @@
 class GoodsList extends CommonList {
-    allItems = []
+    static allItems = []
     placeToRender = document.querySelector('.more-btn-place')
 
     constructor () {
@@ -8,7 +8,7 @@ class GoodsList extends CommonList {
 
         goodsPromise.then(()=>{
             this.items.forEach(good => {
-                this.allItems.push(good)
+                GoodsList.allItems.push(good)
             })
             this.render()
         })
@@ -21,7 +21,7 @@ class GoodsList extends CommonList {
     moreShow = (() => {
         let _x = 0;
         let _b = 0
-        this.allItems.forEach(good => {
+        GoodsList.allItems.forEach(good => {
             let exist = document.getElementById(`item №${good.article}`)
             if (exist){
                 _b++           
@@ -32,7 +32,7 @@ class GoodsList extends CommonList {
                         goodsPromise.then(()=>{
                             if (!this.err){
                             this.items.forEach(good => { 
-                                this.allItems.push(good)
+                                GoodsList.allItems.push(good)
                             })
                             }
                         })
@@ -47,7 +47,7 @@ class GoodsList extends CommonList {
                         goodsPromise.then(()=>{
                             if (!this.err){
                             this.items.forEach(good => { 
-                                this.allItems.push(good)
+                                GoodsList.allItems.push(good)
                             })
                             }
                         })
@@ -56,11 +56,11 @@ class GoodsList extends CommonList {
 
             } else{
                 if(_x<2){
-                good.render()
+                good.render(good)
                 this.placeToRender.before(good.block)
                 _x++}
                 } 
-            if (this.allItems.length - _b == 0){
+            if (GoodsList.allItems.length - _b == 0){
                     this.hideShowMoreBtn()
                     if(!document.querySelector('.goods-end')){
                         let goodsEnd = document.createElement('div')
@@ -74,9 +74,9 @@ class GoodsList extends CommonList {
     })
     render () {
 
-        this.allItems.forEach(good => {
-        if(this.allItems.indexOf(good) < 5){
-            good.render()
+        GoodsList.allItems.forEach(good => {
+        if(GoodsList.allItems.indexOf(good) < 5){
+            good.render(good)
             this.placeToRender.before(good.block)
             }
         })
