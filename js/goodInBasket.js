@@ -62,7 +62,9 @@ class GoodInBasket{
             document.querySelector('.cart-list').classList.toggle('shown')
         }
         
-
+        let item = document.getElementById(`item №${good.article}`)
+        let btn = item.querySelector('.basket-btn')
+        btn.innerText = 'В корзину'
     }
     
     minusCountBasket(good, event) {
@@ -93,6 +95,10 @@ class GoodInBasket{
 
         let text = document.querySelector('.total-coast-items-basket')
         text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
+
+        let itemProto = document.getElementById(`item №${good.article}`)
+
+        itemProto.querySelector('.count-items-number').innerText = number
     }
 
     plusCountBasket(good, event) {
@@ -109,7 +115,6 @@ class GoodInBasket{
                 Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
                 thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
             }
-
         }
 
         let totalCoastSum = 0;
@@ -119,6 +124,10 @@ class GoodInBasket{
 
         let text = document.querySelector('.total-coast-items-basket')
         text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
+        
+        let itemProto = document.getElementById(`item №${good.article}`)
+        itemProto.querySelector('.count-items-number').innerText = number
+
     }
 
     render(good) {

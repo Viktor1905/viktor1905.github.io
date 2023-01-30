@@ -11,11 +11,16 @@ class GoodItem{
         this.price = price
         this.article = article
     }
-    addBasket = (() => {
-        this.number = event.target.previousElementSibling.firstElementChild.nextElementSibling.innerText // заменить на конструкцию с ID
+    addBasket = ((good, event ) => {
+        this.number = good.number
         this.totalCoast = this.price * this.number
         let x = event.target
-        snackbar(x, this)
+        snackbar(x, good)
+        
+        let item = document.getElementById(`item №${good.article}`)
+        let btn = item.querySelector('.basket-btn')
+        btn.innerText = 'Обновить кол-во'
+
         return new GoodInBasket(this)
     })
 
@@ -72,7 +77,7 @@ class GoodItem{
         goodPicture.setAttribute('src', `./img/${this.name}.jpg`)
         goodBtn.innerText = 'В корзину' 
         goodBtn.classList = 'btn basket-btn'
-        goodBtn.onclick = this.addBasket;
+        goodBtn.onclick = this.addBasket.bind(event, good);
         minus.innerText= "-"
         minus.onclick = this.minusCount.bind(event, good);
         itemsNumber.innerText = this.number

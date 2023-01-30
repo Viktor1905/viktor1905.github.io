@@ -23,6 +23,12 @@ class Basket extends CommonList {
 
         let list = document.querySelector(".cart-list")
         list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
+        
+        let btnList = document.querySelectorAll('.basket-btn')
+        btnList.forEach(function(item){
+            item.innerText= 'В корзину'
+        })
+
         return
     }
 
