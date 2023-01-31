@@ -11,7 +11,8 @@ class GoodItem{
         this.price = price
         this.article = article
     }
-    addBasket = ((good, event ) => {
+    addBasket = ((good, event) => {
+        let basketObject
         this.number = good.number
         this.totalCoast = this.price * this.number
         let x = event.target
@@ -19,46 +20,90 @@ class GoodItem{
         
         let item = document.getElementById(`item №${good.article}`)
         let btn = item.querySelector('.basket-btn')
-        btn.innerText = 'Обновить кол-во'
 
-        return new GoodInBasket(this)
+        let goodItem = {}
+        for (let key in this){
+            goodItem[key]= this[key]
+        }
+        console.log(goodItem)// сюда не доходит
+        new GoodInBasket(goodItem)
+        for (let items in Basket.basketGoods) {
+            if(good.article == Basket.basketGoods[items].article) {
+                basketObject = Basket.basketGoods[items]
+            }
+        }
+
+        btn.innerText = 'Удалить из корзины'
+        btn.onclick = basketObject.deleteItem.bind(this, good);
     })
 
     minusCount(good, event){
         let itemPlace = document.getElementById(`item №${good.article}`)
-        let itemObject
+        let itemObject, basketObject
+
         for (let items in GoodsList.allItems) {
             if(good.article == GoodsList.allItems[items].article) {
                 itemObject = GoodsList.allItems[items]
             }
         }
+        for (let items in Basket.basketGoods) {
+            if(good.article == Basket.basketGoods[items].article) {
+                basketObject = Basket.basketGoods[items]
+            }
+        }
 
         if (itemObject.number > 1) {
-            itemObject.number=Number(itemObject.number)
+            itemObject.number = Number(itemObject.number)
             itemObject.number -= 1
         }
-        good.number = itemObject.number
+
+        let checkItemBasket = document.getElementById(`item art:${good.article}`)
+        if(checkItemBasket){
+            let btn = itemPlace.querySelector('.basket-btn')
+            if(basketObject.number == itemObject.number) {
+                btn.innerText = 'Удалить из корзины'
+                btn.onclick = basketObject.deleteItem.bind(this, good);
+            } else {
+                btn.innerText = 'Обновить кол-во'
+                btn.onclick = itemObject.addBasket.bind(this, good);
+            }
+        }
             
         itemPlace.querySelector('.count-items-number').innerText = itemObject.number
-    
     }
     
     plusCount(good, event){
         let itemPlace = document.getElementById(`item №${good.article}`)
-        let itemObject
+        let itemObject, basketObject
+
         for (let items in GoodsList.allItems) {
             if(good.article == GoodsList.allItems[items].article) {
                 itemObject = GoodsList.allItems[items]
+            }
+        }
+        
+        for (let items in Basket.basketGoods) {
+            if(good.article == Basket.basketGoods[items].article) {
+                basketObject = Basket.basketGoods[items]
             }
         }
 
         itemObject.number=Number(itemObject.number)
         itemObject.number += 1
-        good.number = itemObject.number
+        
+        let checkItemBasket = document.getElementById(`item art:${good.article}`)
+        if(checkItemBasket){
+            let btn = itemPlace.querySelector('.basket-btn')
+            if(basketObject.number == itemObject.number) {
+                btn.innerText = 'Удалить из корзины'
+                btn.onclick = basketObject.deleteItem.bind(this, good);
+            } else {
+                btn.innerText = 'Обновить кол-во'
+                btn.onclick = itemObject.addBasket.bind(this, good);
+            }
+        }
             
         itemPlace.querySelector('.count-items-number').innerText = itemObject.number
-    
-    
     }
 
     render(good) {

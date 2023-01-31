@@ -10,6 +10,8 @@ class Basket extends CommonList {
     deleteBasket() {
         let cart = document.querySelector('.good-item-list')
         let cartItems = cart.childNodes.length;
+        let list = document.querySelector(".cart-list")
+
         for (let i = 0; i < cartItems; i++){
 
             document.querySelector('.good-item-basket').remove()
@@ -17,19 +19,26 @@ class Basket extends CommonList {
         if (document.querySelector('.count-basket')){
             document.querySelector('.count-basket').remove()
         }
-        Basket.basketGoods = []
+
 
         document.querySelector('.basket-manag').remove()
 
-        let list = document.querySelector(".cart-list")
-        list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
-        
-        let btnList = document.querySelectorAll('.basket-btn')
-        btnList.forEach(function(item){
-            item.innerText= 'В корзину'
-        })
 
-        return
+        for (let good of GoodsList.allItems){
+            for (let item of Basket.basketGoods){
+                if(good.article == item.article){
+                    let htmlItem = document.getElementById(`item №${good.article}`)
+                    let itemBtn = htmlItem.querySelector(".basket-btn") 
+                    itemBtn.innerText= 'В корзину'
+                    itemBtn.onclick = good.addBasket.bind(event, good); 
+                }
+            }
+        }
+        list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
+
+
+        Basket.basketGoods = []
+        return 
     }
 
     static goodItemList = document.createElement('div')

@@ -1,21 +1,25 @@
 class GoodInBasket{
-    good
+    name = ''
+    price = 0
+    number = 1
+    totalCoast = 0
+    article 
     constructor(good){
-        this.good = good
-        this.addBasket(good)
-        .then(this.render(good))
-        .catch(() => {
-        console.log("This good already in basket. Quanity updated")
-        })
-        this.counter(good)
+        this.name = good.name
+        this.price = good.price
+        this.number = good.number
+        this.totalCoast = good.totalCoast
+        this.article = good.article
+        this.addBasket(this)
+        .then(this.render(this))
+        this.counter(this.good)
     }
     
     addBasket = (good) => new Promise ((resolve, reject) => {
         if (Basket.basketGoods.find(goodInBasket => goodInBasket.name === good.name)) {
-            reject()
         } else {
             Basket.basketGoods.push(good)
-            resolve()
+            resolve() // если отсюда запускать render+ counter, то. +/- работает
         }
     })
 
@@ -37,12 +41,14 @@ class GoodInBasket{
     }
 
 
-    deleteItem(good) {
+    deleteItem(good, event) {
+        console.log(good)
+        let itemIndex, itemObject
         let deleteItem = document.getElementById(`item art:${good.article}`) // Это лучше исправить через event и btn 
         console.log(deleteItem)
         Basket.basketGoods.forEach(function(item) {
             if(item.article == good.article) {
-                let itemIndex = Basket.basketGoods.indexOf(good)
+                itemIndex = Basket.basketGoods.indexOf(good)
                 Basket.basketGoods.splice(itemIndex, 1)
             }
         })
@@ -59,61 +65,94 @@ class GoodInBasket{
         if(!document.querySelector('.good-item-basket')){
             document.querySelector('.basket-manag').remove()
             document.querySelector('.count-basket').remove()
-            document.querySelector('.cart-list').classList.toggle('shown')
+            if(document.querySelector('.cart-list').classList.contains('shown')){
+                document.querySelector('.cart-list').classList.remove('shown')
+            }
         }
         
         let item = document.getElementById(`item №${good.article}`)
         let btn = item.querySelector('.basket-btn')
         btn.innerText = 'В корзину'
+        for (let items in GoodsList.allItems) {
+            if(good.article == GoodsList.allItems[items].article) {
+                itemObject = GoodsList.allItems[items]
+            }
+        }
+
+        btn.onclick = itemObject.addBasket.bind(this, good);
     }
     
     minusCountBasket(good, event) {
-        let thisItem = document.getElementById(`item art:${good.article}`)
-        let number = good.number
+        let thisItem = document.getElementById(`item art:${this.article}`)
+        let number = this.number
 
         if (number > 1){
-            number -= 1
+            for (let items in Basket.basketGoods) {
+                if(this.name == Basket.basketGoods[items].name) {
+                    number = Basket.basketGoods[items].number
+                    number -= 1
+                    Basket.basketGoods[items].number = number
+    
+                    Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
+                    thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
+    
+                    Basket.basketGoods[items].number = number
+                    thisItem.querySelector(`.count-items-basket-number`).innerText = number
+                }
+            }
         } else if(number = 1){
-            this.deleteItem(this.good)
+            this.deleteItem(this)
             return
         }
-        good.number = number
+        this.number = number
         thisItem.querySelector(`.count-items-basket-number`).innerText = number
 
-        for (let items in Basket.basketGoods) {
-            if(good.name == Basket.basketGoods[items].name) {
-                Basket.basketGoods[items].number = number
-                Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
-                thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
-            }
-
-        }
         let totalCoastSum = 0;
         for (let items of Basket.basketGoods) {
             totalCoastSum += items.totalCoast
         }
 
         let text = document.querySelector('.total-coast-items-basket')
-        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
-
+        text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;     
+        
         let itemProto = document.getElementById(`item №${good.article}`)
+        let btn = itemProto.querySelector('.basket-btn')
+        let itemObject, basketObject
 
-        itemProto.querySelector('.count-items-number').innerText = number
+        for (let items in GoodsList.allItems) {
+            if(good.article == GoodsList.allItems[items].article) {
+                itemObject = GoodsList.allItems[items]
+            }
+        }
+        for (let items in Basket.basketGoods) {
+            if(good.article == Basket.basketGoods[items].article) {
+                basketObject = Basket.basketGoods[items]
+            }
+        }
+        if(basketObject.number == itemObject.number) {
+            btn.innerText = 'Удалить из корзины'
+            btn.onclick = this.deleteItem.bind(this, good);
+        } else {
+            btn.innerText = 'Обновить кол-во'
+            
+        }
+        
     }
 
     plusCountBasket(good, event) {
-        let thisItem = document.getElementById(`item art:${good.article}`)
-        let number = +good.number
-
-        number += 1
-        good.number = number
-        thisItem.querySelector(`.count-items-basket-number`).innerText = number
-
+        let thisItem = document.getElementById(`item art:${this.article}`)
+        let number 
         for (let items in Basket.basketGoods) {
-            if(good.name == Basket.basketGoods[items].name) {
+            if(this.name == Basket.basketGoods[items].name) {
+                number = Basket.basketGoods[items].number
+                number += 1
                 Basket.basketGoods[items].number = number
+
                 Basket.basketGoods[items].totalCoast = Basket.basketGoods[items].number * Basket.basketGoods[items].price
                 thisItem.querySelector(`.coast-items-basket`).innerText = `Стоимость: ${Basket.basketGoods[items].totalCoast}`
+
+                Basket.basketGoods[items].number = number
+                thisItem.querySelector(`.count-items-basket-number`).innerText = number
             }
         }
 
@@ -124,21 +163,38 @@ class GoodInBasket{
 
         let text = document.querySelector('.total-coast-items-basket')
         text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;
-        
-        let itemProto = document.getElementById(`item №${good.article}`)
-        itemProto.querySelector('.count-items-number').innerText = number
 
+        let itemProto = document.getElementById(`item №${good.article}`)
+        let btn = itemProto.querySelector('.basket-btn')
+        let itemObject, basketObject
+
+        for (let items in GoodsList.allItems) {
+            if(good.article == GoodsList.allItems[items].article) {
+                itemObject = GoodsList.allItems[items]
+            }
+        }
+        for (let items in Basket.basketGoods) {
+            if(good.article == Basket.basketGoods[items].article) {
+                basketObject = Basket.basketGoods[items]
+            }
+        }
+        if(basketObject.number == itemObject.number) {
+            btn.innerText = 'Удалить из корзины'
+            btn.onclick = this.deleteItem.bind(this, good);
+        } else {
+            btn.innerText = 'Обновить кол-во'
+        }
     }
 
     render(good) {
         let placeToRender = document.createElement('div')
         // document.querySelector('.good-item-list')
-        let checkGood = document.getElementById(`item art:${good.article}`)
+        let checkGood = document.getElementById(`item art:${this.article}`)
 
         if(checkGood) {
-            if(checkGood.querySelector('.good-name-basket').innerText == good.name) {
-                checkGood.querySelector('.count-items-basket-number').innerText = `${good.number}`
-                checkGood.querySelector('.coast-items-basket').innerText = `Стоимость: ${good.totalCoast}`
+            if(checkGood.querySelector('.good-name-basket').innerText == this.name) {
+                checkGood.querySelector('.count-items-basket-number').innerText = `${this.number}`
+                checkGood.querySelector('.coast-items-basket').innerText = `Стоимость: ${this.totalCoast}`
                 let totalCoastSum = 0;
                 for (let obj of Basket.basketGoods){
                     totalCoastSum += obj.totalCoast
@@ -152,15 +208,15 @@ class GoodInBasket{
         if(placeToRender) {
             let block = document.createElement('div')
             block.classList = 'good-item-basket'
-            block.setAttribute(`id`, `item art:${good.article}`)
+            block.setAttribute(`id`, `item art:${this.article}`)
 
             let goodName = document.createElement('span')
-            goodName.innerHTML = `${good.name}`
+            goodName.innerHTML = `${this.name}`
             goodName.classList = 'good-name-basket'
-            goodName.setAttribute(`id`, `item art:${good.article}`)
+            goodName.setAttribute(`id`, `item art:${this.article}`)
 
             let goodPrice = document.createElement('span')
-            goodPrice.innerHTML = `Цена: ${good.price}`
+            goodPrice.innerHTML = `Цена: ${this.price}`
             goodPrice.classList = 'good-price-basket'
 
             let goodPicture = document.createElement('img')
@@ -172,12 +228,12 @@ class GoodInBasket{
             
             let minus = document.createElement('button')
             minus.innerText= "-"
-            minus.onclick = this.minusCountBasket.bind(this, good);
+            minus.onclick = this.minusCountBasket.bind(this, good); // необходимо поменять, т.к. он рабоатет с первонеачальным объектом и нумбер берет из allitems а не basketgoods
             minus.classList = 'count-btn'
 
             let itemsNumber = document.createElement('span')
             itemsNumber.classList = 'count-items-basket-number'
-            itemsNumber.innerText = `${good.number}`
+            itemsNumber.innerText = `${this.number}`
 
             let plus = document.createElement('button')
             plus.innerText= "+"
@@ -186,7 +242,7 @@ class GoodInBasket{
             plus.classList = 'count-btn'
 
             let coast = document.createElement('span')
-            coast.innerText = `Стоимость: ${good.number * good.price}`
+            coast.innerText = `Стоимость: ${this.number * this.price}`
             coast.classList = 'coast-items-basket'
 
             let deleteBtn = document.createElement('button')
