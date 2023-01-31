@@ -1,4 +1,4 @@
-class GoodItem{
+class GoodItem {
     name = ''
     price = 0
     number = 1
@@ -22,10 +22,9 @@ class GoodItem{
         let btn = item.querySelector('.basket-btn')
 
         let goodItem = {}
-        for (let key in this){
+        for (let key in this) {
             goodItem[key]= this[key]
         }
-        console.log(goodItem)// сюда не доходит
         new GoodInBasket(goodItem)
         for (let items in Basket.basketGoods) {
             if(good.article == Basket.basketGoods[items].article) {
@@ -37,7 +36,7 @@ class GoodItem{
         btn.onclick = basketObject.deleteItem.bind(this, good);
     })
 
-    minusCount(good, event){
+    minusCount(good, event) {
         let itemPlace = document.getElementById(`item №${good.article}`)
         let itemObject, basketObject
 
@@ -58,7 +57,7 @@ class GoodItem{
         }
 
         let checkItemBasket = document.getElementById(`item art:${good.article}`)
-        if(checkItemBasket){
+        if(checkItemBasket) {
             let btn = itemPlace.querySelector('.basket-btn')
             if(basketObject.number == itemObject.number) {
                 btn.innerText = 'Удалить из корзины'
@@ -72,7 +71,7 @@ class GoodItem{
         itemPlace.querySelector('.count-items-number').innerText = itemObject.number
     }
     
-    plusCount(good, event){
+    plusCount(good, event) {
         let itemPlace = document.getElementById(`item №${good.article}`)
         let itemObject, basketObject
 

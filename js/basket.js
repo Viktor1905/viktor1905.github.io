@@ -12,11 +12,10 @@ class Basket extends CommonList {
         let cartItems = cart.childNodes.length;
         let list = document.querySelector(".cart-list")
 
-        for (let i = 0; i < cartItems; i++){
-
+        for (let i = 0; i < cartItems; i++) {
             document.querySelector('.good-item-basket').remove()
         }
-        if (document.querySelector('.count-basket')){
+        if (document.querySelector('.count-basket')) {
             document.querySelector('.count-basket').remove()
         }
 
@@ -24,9 +23,9 @@ class Basket extends CommonList {
         document.querySelector('.basket-manag').remove()
 
 
-        for (let good of GoodsList.allItems){
-            for (let item of Basket.basketGoods){
-                if(good.article == item.article){
+        for (let good of GoodsList.allItems) {
+            for (let item of Basket.basketGoods) {
+                if(good.article == item.article) {
                     let htmlItem = document.getElementById(`item №${good.article}`)
                     let itemBtn = htmlItem.querySelector(".basket-btn") 
                     itemBtn.innerText= 'В корзину'
@@ -47,7 +46,7 @@ class Basket extends CommonList {
         Basket.goodItemList.append(good)
     }
 
-    render() {   //сделать 
+    render() {  
         let block = document.createElement('div')
         block.classList.add('cart')
 
@@ -70,8 +69,8 @@ class Basket extends CommonList {
         }
     }
 
-    renderTotalCoast(){
-        let placeToRender = document.querySelector('.cart-list')// здесь его быть не должно, он должен быть в Родительском блоке
+    renderTotalCoast() {
+        let placeToRender = document.querySelector('.cart-list')
 
         let basketManag = document.createElement('div')
         basketManag.setAttribute('class', 'basket-manag')

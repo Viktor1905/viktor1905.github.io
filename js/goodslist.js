@@ -2,11 +2,11 @@ class GoodsList extends CommonList {
     static allItems = []
     placeToRender = document.querySelector('.more-btn-place')
 
-    constructor () {
+    constructor() {
         super () 
         let goodsPromise = this.fetchGoods()
 
-        goodsPromise.then(()=>{
+        goodsPromise.then(() => {
             this.items.forEach(good => {
                 GoodsList.allItems.push(good)
             })
@@ -23,13 +23,13 @@ class GoodsList extends CommonList {
         let _b = 0
         GoodsList.allItems.forEach(good => {
             let exist = document.getElementById(`item №${good.article}`)
-            if (exist){
+            if (exist) {
                 _b++           
-                if(this.items.length - _b == 3 && _b != 3){ 
+                if(this.items.length - _b == 3 && _b != 3) { 
                     if (!this.err){
                         let goodsPromise = this.fetchGoods(`${window.location.href}json/database`+this.qur+`.json`)
                         this.qur++
-                        goodsPromise.then(()=>{
+                        goodsPromise.then(()=> {
                             if (!this.err){
                             this.items.forEach(good => { 
                                 GoodsList.allItems.push(good)
@@ -41,10 +41,10 @@ class GoodsList extends CommonList {
 
                 } else if(this.items.length - _b == 4 && _b != 4) {
 
-                      if (!this.err){
+                      if (!this.err) {
                         let goodsPromise = this.fetchGoods(`${window.location.href}json/database`+this.qur+`.json`)
                         this.qur++
-                        goodsPromise.then(()=>{
+                        goodsPromise.then(()=> {
                             if (!this.err){
                             this.items.forEach(good => { 
                                 GoodsList.allItems.push(good)
@@ -56,13 +56,14 @@ class GoodsList extends CommonList {
 
             } else{
                 if(_x<2) {
-                good.render(good)
-                this.placeToRender.before(good.block)
-                _x++}
-                } 
-            if (GoodsList.allItems.length - _b == 0){
+                    good.render(good)
+                    this.placeToRender.before(good.block)
+                    _x++
+                }
+            } 
+            if (GoodsList.allItems.length - _b == 0) {
                     this.hideShowMoreBtn()
-                    if(!document.querySelector('.goods-end')){
+                    if(!document.querySelector('.goods-end')) {
                         let goodsEnd = document.createElement('div')
                         goodsEnd.classList = 'goods-end'
                         goodsEnd.innerText = "Вы просмотрели все наши товары"
@@ -81,7 +82,7 @@ class GoodsList extends CommonList {
             }
         })
         if (this.placeToRender){
-            if (!document.querySelector('.more-btn')){
+            if (!document.querySelector('.more-btn')) {
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'
             moreBtn.classList = 'btn more-btn'
