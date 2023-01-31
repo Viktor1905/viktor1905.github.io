@@ -14,10 +14,12 @@ class GoodsList extends CommonList {
         })
     } //запрос товаров
     qur = 1
+
     hideShowMoreBtn() {
         let btn = document.querySelector(".more-btn")
         btn.remove()
     }
+
     moreShow = (() => {
         let _x = 0;
         let _b = 0
@@ -54,7 +56,7 @@ class GoodsList extends CommonList {
                     } 
                 }
 
-            } else{
+            } else {
                 if(_x<2) {
                     good.render(good)
                     this.placeToRender.before(good.block)
@@ -62,26 +64,25 @@ class GoodsList extends CommonList {
                 }
             } 
             if (GoodsList.allItems.length - _b == 0) {
-                    this.hideShowMoreBtn()
-                    if(!document.querySelector('.goods-end')) {
-                        let goodsEnd = document.createElement('div')
-                        goodsEnd.classList = 'goods-end'
-                        goodsEnd.innerText = "Вы просмотрели все наши товары"
-                        this.placeToRender = document.querySelector('.more-btn-place')
-                        this.placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
-                    }
+                this.hideShowMoreBtn()
+                if(!document.querySelector('.goods-end')) {
+                    let goodsEnd = document.createElement('div')
+                    goodsEnd.classList = 'goods-end'
+                    goodsEnd.innerText = "Вы просмотрели все наши товары"
+                    this.placeToRender = document.querySelector('.more-btn-place')
+                    this.placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
+                }
             }
         })
     })
-    render () {
-
+    render() {
         GoodsList.allItems.forEach(good => {
-        if(GoodsList.allItems.indexOf(good) < 5){
+        if(GoodsList.allItems.indexOf(good) < 5) {
             good.render(good)
             this.placeToRender.before(good.block)
             }
         })
-        if (this.placeToRender){
+        if (this.placeToRender) {
             if (!document.querySelector('.more-btn')) {
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'

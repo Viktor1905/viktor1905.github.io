@@ -19,9 +19,7 @@ class Basket extends CommonList {
             document.querySelector('.count-basket').remove()
         }
 
-
         document.querySelector('.basket-manag').remove()
-
 
         for (let good of GoodsList.allItems) {
             for (let item of Basket.basketGoods) {
@@ -29,20 +27,19 @@ class Basket extends CommonList {
                     let htmlItem = document.getElementById(`item №${good.article}`)
                     let itemBtn = htmlItem.querySelector(".basket-btn") 
                     itemBtn.innerText= 'В корзину'
+                    itemBtn.classList.remove('delete-item')
                     itemBtn.onclick = good.addBasket.bind(event, good); 
                 }
             }
         }
         list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
 
-
         Basket.basketGoods = []
-        return 
     }
 
     static goodItemList = document.createElement('div')
 
-    renderGood(good){ //реализация отрисовки дочки по указанию родителя
+    renderGood(good) { //реализация отрисовки дочки по указанию родителя
         Basket.goodItemList.append(good)
     }
 

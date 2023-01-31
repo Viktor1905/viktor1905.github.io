@@ -2,7 +2,7 @@ let opacityNumb = 10
 
 let snackbar =  (event, good)=> {
     if(!event.parentElement.querySelector(".mes-cart")) {
-        let placeToRender = event.parentElement
+        let placeToRender = event.parentElement// периначить работу отрисовки, пусть карточка говорит где отрисовывать
         let mes = document.createElement('div')
         if(Basket.basketGoods.find(goodInBasket => goodInBasket.name === good.name)) {
             mes.innerText = 'Количество товара обновлено'
