@@ -11,6 +11,7 @@ let snackbar =  (event, good)=> {
         mes.classList.add("mes-cart")
         placeToRender.insertAdjacentElement('beforeEnd', mes)
         let elem = event.parentElement.querySelector(".mes-cart")
+
         let del = function () {
                 let disap = setInterval(()=> {        
                     opacityNumb-=1
@@ -19,11 +20,12 @@ let snackbar =  (event, good)=> {
                     if(opacityNumb == 1) {
                         elem.remove()
                         opacityNumb = 10
-                        return
+                        return 
                     }}, 20)
                 setTimeout(() => clearInterval(disap), 500)
                 
         }
         setTimeout(del, 1500)
+
     }
 }

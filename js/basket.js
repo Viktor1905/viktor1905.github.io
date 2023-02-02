@@ -67,8 +67,6 @@ class Basket extends CommonList {
     }
 
     renderTotalCoast() {
-        let placeToRender = document.querySelector('.cart-list')
-
         let basketManag = document.createElement('div')
         basketManag.setAttribute('class', 'basket-manag')
 
@@ -86,12 +84,12 @@ class Basket extends CommonList {
         cleanBasket.onclick = this.deleteBasket;
 
         if(!document.querySelector('.total-coast-items-basket')) {
-            placeToRender.appendChild(basketManag)
             basketManag.appendChild(totalCoast)
             basketManag.appendChild(cleanBasket)
         } else {
             let text = document.querySelector('.total-coast-items-basket')
             text.innerText = `Итоговая стоимость корзины: `+Basket.totalCoastSum;
         }
+        return basketManag
     }
 }

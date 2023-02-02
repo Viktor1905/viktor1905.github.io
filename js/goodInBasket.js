@@ -197,7 +197,7 @@ class GoodInBasket {
     }
 
     render(good) {
-        let placeToRender = document.createElement('div')
+        let block = document.createElement('div')
         let checkGood = document.getElementById(`item art:${this.article}`)
 
         if(checkGood) {
@@ -214,7 +214,8 @@ class GoodInBasket {
             }
         }
 
-        if(placeToRender) {
+        if(block) {
+            let placeToRenderTotalCoast = document.querySelector('.cart-list')
             let block = document.createElement('div')
             block.classList = 'good-item-basket'
             block.setAttribute(`id`, `item art:${this.article}`)
@@ -268,7 +269,6 @@ class GoodInBasket {
             if(text){
             text.innerText = `Итоговая стоимость корзины: `+totalCoastSum;}
 
-            placeToRender.appendChild(block)
             block.appendChild(goodPicture)
             block.appendChild(goodName)
             block.appendChild(goodPrice)
@@ -279,7 +279,7 @@ class GoodInBasket {
             block.appendChild(coast)
             block.appendChild(deleteBtn)
             
-            CartInstance.renderTotalCoast()
+            placeToRenderTotalCoast.append(CartInstance.renderTotalCoast())
             CartInstance.renderGood(block)
 
             return

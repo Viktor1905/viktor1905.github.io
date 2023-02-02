@@ -18,7 +18,6 @@ class GoodItem {
         let x = event.target
         snackbar(x, good)
         
-        
         let item = document.getElementById(`item №${good.article}`)
         let btn = item.querySelector('.basket-btn')
 
