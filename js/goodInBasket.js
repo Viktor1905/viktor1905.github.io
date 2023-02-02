@@ -14,6 +14,7 @@ class GoodInBasket {
         .then(this.render(this))
         this.counter(this.good)
     }
+
     
     addBasket = (good) => new Promise ((resolve, reject) => {
         let check = Basket.basketGoods.find(goodInBasket => goodInBasket.name === good.name)
@@ -28,25 +29,7 @@ class GoodInBasket {
             resolve() 
         }
     })
-
-    counter() {
-        if (document.querySelector('.count-basket')) {
-            document.querySelector('.count-basket').innerText= Basket.basketGoods.length
-        }
-        else {
-            let count = document.createElement('div')
-            count.classList.add('count-basket') 
-            if(Basket.basketGoods!=undefined) {
-                count.innerText= Basket.basketGoods.length}
-            else {
-                count.innerText = 0
-            }
-            let button = document.querySelector('.cart-show-btn')
-            button.appendChild(count)
-        }
-    }
-
-
+    
     deleteItem(good, event) {
         let itemIndex, itemObject
         let deleteItem = document.getElementById(`item art:${good.article}`) 
@@ -193,6 +176,23 @@ class GoodInBasket {
             btn.innerText = 'Обновить кол-во'
             btn.classList.remove('delete-item')
             btn.onclick = itemObject.addBasket.bind(this, itemObject);
+        }
+    }
+
+    counter() {
+        if (document.querySelector('.count-basket')) {
+            document.querySelector('.count-basket').innerText= Basket.basketGoods.length
+        }
+        else {
+            let count = document.createElement('div')
+            count.classList.add('count-basket') 
+            if(Basket.basketGoods!=undefined) {
+                count.innerText= Basket.basketGoods.length}
+            else {
+                count.innerText = 0
+            }
+            let button = document.querySelector('.cart-show-btn')
+            button.appendChild(count)
         }
     }
 

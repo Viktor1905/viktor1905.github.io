@@ -43,29 +43,7 @@ class Basket extends CommonList {
         Basket.goodItemList.append(good)
     }
 
-    render() {  
-        let block = document.createElement('div')
-        block.classList.add('cart')
-
-        Basket.goodItemList.classList.add('good-item-list')
-
-        let list = document.createElement('div')
-        list.classList.add('cart-list')
-        block.appendChild(list)
-        list.appendChild(Basket.goodItemList)
-
-        let ButtonInstnce = new Button ('Корзина', () => {
-            list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
-        })
-
-        block.appendChild(ButtonInstnce.getTemplate('cart-show-btn'))        
-
-        let placeToRender = document.querySelector('header')
-        if(placeToRender) {
-            placeToRender.appendChild(block)
-        }
-    }
-
+    
     renderTotalCoast() {
         let basketManag = document.createElement('div')
         basketManag.setAttribute('class', 'basket-manag')
@@ -92,4 +70,28 @@ class Basket extends CommonList {
         }
         return basketManag
     }
+    
+    render() {  
+        let block = document.createElement('div')
+        block.classList.add('cart')
+
+        Basket.goodItemList.classList.add('good-item-list')
+
+        let list = document.createElement('div')
+        list.classList.add('cart-list')
+        block.appendChild(list)
+        list.appendChild(Basket.goodItemList)
+
+        let ButtonInstnce = new Button ('Корзина', () => {
+            list.classList.toggle('shown')//Если у списка был класс shown, он уберется. если его не было - он добавится
+        })
+
+        block.appendChild(ButtonInstnce.getTemplate('cart-show-btn'))        
+
+        let placeToRender = document.querySelector('header')
+        if(placeToRender) {
+            placeToRender.appendChild(block)
+        }
+    }
+
 }

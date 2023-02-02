@@ -1,3 +1,9 @@
+:root {
+    --color-gray-opacity: rgba(35, 35, 35, 0.6);
+    --color-gray: rgb(232, 232, 232);
+    --color-green: #23d14c;
+    --color-red: rgba(255, 93, 93);
+  }
 .goods-list {
     display: grid;
     grid-gap: 35px 45px;
@@ -7,7 +13,7 @@
 
 .good-item {
     align-items: center;
-    background-color: rgb(232, 232, 232);
+    background-color: var(--color-gray);
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -51,7 +57,7 @@
 
 .mes-cart {
     align-items: center;
-    background: rgba(35, 35, 35, 0.6);
+    background: var(--color-gray-opacity);
     border-radius: 5px;
     bottom: 80px;
     color: white;
@@ -67,10 +73,10 @@
 }
 
 .basket-btn:active {
-    background-color: green;
+    background-color: var(--color-green);
 }
 .delete-item {
-	background-color: rgba(255, 93, 93);
+	background-color: var(--color-red);
 }
 
 @media (max-width: 1280px) {
