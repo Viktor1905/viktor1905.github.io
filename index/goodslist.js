@@ -1,90 +1,94 @@
-
 class GoodsList extends CommonList {
-    allItems = []
+    static allItems = []
+    placeToRender = document.querySelector('.more-btn-place')
 
-    constructor () {
+    constructor() {
         super () 
         let goodsPromise = this.fetchGoods()
 
-        goodsPromise.then(()=>{
+        goodsPromise.then(() => {
             this.items.forEach(good => {
-                this.allItems.push(good)
+                GoodsList.allItems.push(good)
             })
             this.render()
         })
     } //запрос товаров
     qur = 1
-    hideShowMoreBtn(){
+
+    hideShowMoreBtn() {
         let btn = document.querySelector(".more-btn")
         btn.remove()
     }
+
     moreShow = (() => {
         let _x = 0;
         let _b = 0
-        this.allItems.forEach(good => {
+        GoodsList.allItems.forEach(good => {
             let exist = document.getElementById(`item №${good.article}`)
-            if (exist){
+            if (exist) {
                 _b++           
-                if(this.items.length - _b == 3 && _b != 3){ 
+                if(this.items.length - _b == 3 && _b != 3) { 
                     if (!this.err){
                         let goodsPromise = this.fetchGoods(`${window.location.href}json/database`+this.qur+`.json`)
                         this.qur++
-                        goodsPromise.then(()=>{
+                        goodsPromise.then(()=> {
                             if (!this.err){
                             this.items.forEach(good => { 
-                                this.allItems.push(good)
+                                GoodsList.allItems.push(good)
                             })
                             }
                         })
                     }
                     return
 
-                } else if(this.items.length - _b == 4 && _b != 4){
+                } else if(this.items.length - _b == 4 && _b != 4) {
 
-                      if (!this.err){
+                      if (!this.err) {
                         let goodsPromise = this.fetchGoods(`${window.location.href}json/database`+this.qur+`.json`)
                         this.qur++
-                        goodsPromise.then(()=>{
+                        goodsPromise.then(()=> {
                             if (!this.err){
                             this.items.forEach(good => { 
-                                this.allItems.push(good)
+                                GoodsList.allItems.push(good)
                             })
                             }
                         })
                     } 
                 }
 
-            } else{
-                if(_x<2){
-                good.render()
-                _x++}
-                } 
-            if (this.allItems.length - _b == 0){
-                    this.hideShowMoreBtn()
-                    if(!document.querySelector('.goods-end')){
-                        let goodsEnd = document.createElement('div')
-                        goodsEnd.classList = 'goods-end'
-                        goodsEnd.innerText = "Вы просмотрели все наши товары"
-                        let placeToRender = document.querySelector('.more-btn-place')
-                        placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
-                    }
+            } else {
+                if(_x<2) {
+                    good.render(good)
+                    this.placeToRender.before(good.block)
+                    _x++
+                }
+            } 
+            if (GoodsList.allItems.length - _b == 0) {
+                this.hideShowMoreBtn()
+                if(!document.querySelector('.goods-end')) {
+                    let goodsEnd = document.createElement('div')
+                    goodsEnd.classList = 'goods-end'
+                    goodsEnd.innerText = "Вы просмотрели все наши товары"
+                    this.placeToRender = document.querySelector('.more-btn-place')
+                    this.placeToRender.insertAdjacentElement('beforebegin', goodsEnd)
+                }
             }
         })
     })
-    render () {
-        this.allItems.forEach(good => {
-        if(this.allItems.indexOf(good) < 5){
-            good.render()
+    render() {
+        GoodsList.allItems.forEach(good => {
+        if(GoodsList.allItems.indexOf(good) < 5) {
+            good.render(good)
+            this.placeToRender.before(good.block)
             }
         })
-        let placeToRender = document.querySelector('.more-btn-place')
-        if (placeToRender){
-            if (!document.querySelector('.more-btn')){
+        if (this.placeToRender) {
+            if (!document.querySelector('.more-btn')) {
             let moreBtn = document.createElement('button')
             moreBtn.innerText = 'Показать еще'
             moreBtn.classList = 'btn more-btn'
             moreBtn.onclick = this.moreShow;
-            placeToRender.appendChild(moreBtn)
+            this.placeToRender.appendChild(moreBtn)
             }
         }
     }
