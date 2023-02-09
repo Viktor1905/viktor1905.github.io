@@ -23,7 +23,7 @@ class Basket extends CommonList {
 
         for (let good of GoodsList.allItems) {
             for (let item of Basket.basketGoods) {
-                if(good.article == item.article) {
+                if(good.article === item.article) {
                     let htmlItem = document.getElementById(`item №${good.article}`)
                     let itemBtn = htmlItem.querySelector(".basket-btn") 
                     itemBtn.innerText= 'В корзину'

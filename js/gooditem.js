@@ -29,7 +29,7 @@ class GoodItem {
         new GoodInBasket(goodItem)
 
         for (let items in Basket.basketGoods) {
-            if(good.article == Basket.basketGoods[items].article) {
+            if(good.article === Basket.basketGoods[items].article) {
                 basketObject = Basket.basketGoods[items]
             }
         }
@@ -37,6 +37,7 @@ class GoodItem {
         btn.innerText = 'Удалить из корзины'
         btn.classList.add('delete-item')
         btn.onclick = basketObject.deleteItem.bind(this, good);
+
     })
 
     minusCount(good, event) {
@@ -45,13 +46,13 @@ class GoodItem {
         let itemObject, basketObject
 
         for (let items in GoodsList.allItems) {
-            if(good.article == GoodsList.allItems[items].article) {
+            if(good.article === GoodsList.allItems[items].article) {
                 itemObject = GoodsList.allItems[items]
             }
         }
 
         for (let items in Basket.basketGoods) {
-            if(good.article == Basket.basketGoods[items].article) {
+            if(good.article === Basket.basketGoods[items].article) {
                 basketObject = Basket.basketGoods[items]
             }
         }
@@ -63,7 +64,7 @@ class GoodItem {
 
         if(checkItemBasket) {
             let btn = itemPlace.querySelector('.basket-btn')
-            if(basketObject.number == itemObject.number) {
+            if(basketObject.number === itemObject.number) {
                 btn.innerText = 'Удалить из корзины'
                 btn.classList.add('delete-item')
                 btn.onclick = basketObject.deleteItem.bind(this, good);
@@ -83,13 +84,13 @@ class GoodItem {
         let itemObject, basketObject
 
         for (let items in GoodsList.allItems) {
-            if(good.article == GoodsList.allItems[items].article) {
+            if(good.article === GoodsList.allItems[items].article) {
                 itemObject = GoodsList.allItems[items]
             }
         }
         
         for (let items in Basket.basketGoods) {
-            if(good.article == Basket.basketGoods[items].article) {
+            if(good.article === Basket.basketGoods[items].article) {
                 basketObject = Basket.basketGoods[items]
             }
         }
@@ -99,7 +100,7 @@ class GoodItem {
 
         if(checkItemBasket){
             let btn = itemPlace.querySelector('.basket-btn')
-            if(basketObject.number == itemObject.number) {
+            if(basketObject.number === itemObject.number) {
                 btn.innerText = 'Удалить из корзины'
                 btn.classList.add('delete-item')
                 btn.onclick = basketObject.deleteItem.bind(this, good);
