@@ -1,0 +1,27 @@
+.feedback {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    width: 50%;
+}
+
+.feedback-btn {
+    align-self: center;
+    margin: 20px 0 0 0;
+    width: 50%;
+}
+
+.feedback-bad {
+    border: 2px solid red;
+}
+
+.feedback-good {
+    border: 2px solid green;
+}
+
